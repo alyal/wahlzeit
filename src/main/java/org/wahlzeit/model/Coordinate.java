@@ -31,16 +31,16 @@ public class Coordinate {
 		return z;
 	}
 
-	public void setXCoordinate(double newXCoordinate) {
-		this.x = newXCoordinate;
+	public void setXCoordinate(double xCoordinate) {
+		this.x = xCoordinate;
 	}
 
-	public void setYCoordinate(double newYCoordinate) {
-		this.y = newYCoordinate;
+	public void setYCoordinate(double yCoordinate) {
+		this.y = yCoordinate;
 	}
 
-	public void setZCoordinate(double newZCoordinate) {
-		this.z = newZCoordinate;
+	public void setZCoordinate(double zCoordinate) {
+		this.z = zCoordinate;
 	}
 
 	/**
