@@ -69,9 +69,10 @@ public class Coordinate {
 	 * @param coordinate
 	 * @return boolean
 	 */
-	public boolean equals(Coordinate coordinate) {
-		if (coordinate != null) {
-			return this.isEqual(coordinate);
+	@Override
+	public boolean equals(Object obj) {
+		if (obj != null && obj instanceof Coordinate) {
+			return this.isEqual((Coordinate) obj);
 		} else {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
@@ -84,8 +85,16 @@ public class Coordinate {
 	 * @return boolean
 	 */
 	public boolean isEqual(Coordinate coordinate) {
-		if (x == coordinate.x && y == coordinate.y && z == coordinate.z) {
-			return true;
+		final double delta = 0.000001;
+
+		if (Math.abs(x - coordinate.x) <= delta) {
+
+			if (Math.abs(y - coordinate.y) <= delta) {
+
+				if (Math.abs(z - coordinate.z) <= delta) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

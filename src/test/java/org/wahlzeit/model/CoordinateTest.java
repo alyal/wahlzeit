@@ -45,6 +45,22 @@ public class CoordinateTest {
 	}
 
 	@Test
+	public void isEqualTest() {
+		coordinatesB.setXCoordinate(1.0);
+		coordinatesB.setYCoordinate(1.0);
+		coordinatesB.setZCoordinate(1.0);
+		assertEquals(coordinatesA.isEqual(coordinatesB), true);
+	}
+
+	@Test
+	public void equalsTest() {
+		coordinatesB.setXCoordinate(1.0);
+		coordinatesB.setYCoordinate(1.0);
+		coordinatesB.setZCoordinate(1.0);
+		assertEquals(coordinatesA.equals(coordinatesB), true);
+	}
+
+	@Test
 	public void coordinatesAreEqualTest() {
 		coordinatesB.setXCoordinate(1.0);
 		coordinatesB.setYCoordinate(1.0);
