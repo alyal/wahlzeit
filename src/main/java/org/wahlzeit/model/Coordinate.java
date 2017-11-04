@@ -51,31 +51,54 @@ public class Coordinate {
 	 * @return distance between both coordinates
 	 */
 	public double getDistance(Coordinate coordinate) {
-		if (coordinate != null) {
-			double deltaX = x - coordinate.x;
-			double deltaY = y - coordinate.y;
-			double deltaZ = z - coordinate.z;
-			return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
-		} else {
+		if (coordinate == null) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
-
+		double deltaX = x - coordinate.getXCoordinate();
+		double deltaY = y - coordinate.getYCoordinate();
+		double deltaZ = z - coordinate.getZCoordinate();
+		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 	}
 
 	/**
-	 * Forwards coordinates to isEqual()-method after checking if argument is not
-	 * null
+	 * Forwards coordinates to isEqual()-method after checking if argument is an
+	 * instance of coordinate
 	 * 
-	 * @param coordinate
+	 * @param obj
+	 *            a Coordinate class Object
 	 * @return boolean
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof Coordinate) {
-			return this.isEqual((Coordinate) obj);
-		} else {
+		if (!(obj instanceof Coordinate)) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
+		return this.isEqual((Coordinate) obj);
+	}
+
+	/**
+	 * When override equals-method, it is necessary to override hashCode. (E.g. see
+	 * Item 9 in EffectiveJava by Joshua Bloch (3. Edition, 2005))
+	 */
+	@Override
+	public int hashCode() {
+		int result = 17;
+		long toLongBits;
+		int c; // int hash code for field
+
+		toLongBits = Double.doubleToLongBits(x);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		toLongBits = Double.doubleToLongBits(y);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		toLongBits = Double.doubleToLongBits(z);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		return result;
 	}
 
 	/**
@@ -85,13 +108,13 @@ public class Coordinate {
 	 * @return boolean
 	 */
 	public boolean isEqual(Coordinate coordinate) {
-		final double delta = 0.000001;
+		final double delta = 0.0000001;
 
-		if (Math.abs(x - coordinate.x) <= delta) {
+		if (Math.abs(x - coordinate.getXCoordinate()) <= delta) {
 
-			if (Math.abs(y - coordinate.y) <= delta) {
+			if (Math.abs(y - coordinate.getYCoordinate()) <= delta) {
 
-				if (Math.abs(z - coordinate.z) <= delta) {
+				if (Math.abs(z - coordinate.getZCoordinate()) <= delta) {
 					return true;
 				}
 			}
