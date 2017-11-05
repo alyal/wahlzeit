@@ -121,7 +121,7 @@ public class Photo extends DataObject {
 	/**
 	 * 
 	 */
-	protected Location location;
+	public Location location;
 
 	/**
 	 * The default type is jpg
