@@ -31,6 +31,7 @@ public class EmailServiceTest {
 
 	EmailService emailService = null;
 	EmailAddress validAddress = null;
+	EmailAddress invalidAdress = null;
 
 	@Before
 	public void setup() throws Exception {
@@ -57,4 +58,31 @@ public class EmailServiceTest {
 			Assert.fail("Silent mode does not allow exceptions");
 		}
 	}
+
+	// Some more Test because first two test were already implemented
+
+	@Test
+	public void testSendAnotherInvalidEmail() {
+		this.invalidAdress = EmailAddress.getFromString("test@invalid.de");
+		try {
+			assertFalse(emailService.sendEmailIgnoreException(invalidAdress, null, "Test", "You shall not pass!"));
+			assertFalse(emailService.sendEmailIgnoreException(null, invalidAdress, "Test", "Houston we have a problem!"));
+			assertFalse(emailService.sendEmailIgnoreException(invalidAdress, invalidAdress, null, "It's a trap!"));
+			assertFalse(emailService.sendEmailIgnoreException(invalidAdress, invalidAdress, "Test", null));
+			assertFalse(emailService.sendEmailIgnoreException(null, null, "Test", null));
+			assertFalse(emailService.sendEmailIgnoreException(null, null, null, "I have a bad feeling about this!"));
+		} catch (Exception e) {
+			Assert.fail("Silent mode does not allow exceptions");
+		}
+	}
+
+	@Test
+	public void testSendAnotherValidEmail() {
+		try {
+			assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, "hi", "I love it when a plan comes together"));
+		} catch (Exception ex) {
+			Assert.fail("Silent mode does not allow exceptions");
+		}
+	}
+
 }
