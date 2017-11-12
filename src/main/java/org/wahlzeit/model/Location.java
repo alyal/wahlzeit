@@ -27,7 +27,27 @@ package org.wahlzeit.model;
 public class Location {
 	public Coordinate coordinate;
 
+	public Location() {
+		this.coordinate = new Coordinate();
+	}
+
 	public Location(Coordinate corrdiante) {
 		this.coordinate = corrdiante;
+	}
+
+	/**
+	 * @methodtype get
+	 * @methodproperty primitive
+	 */
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	/**
+	 * @methodtype set
+	 * @methodproperty primitive
+	 */
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
 	}
 }

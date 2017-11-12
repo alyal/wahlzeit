@@ -20,6 +20,7 @@
 
 package org.wahlzeit.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -31,6 +32,16 @@ public class LocationTest {
 		Coordinate coordinates = new Coordinate(1.0, 1.0, 1.0);
 		Location newLocation = new Location(coordinates);
 		assertNotNull(newLocation);
+	}
+	
+	@Test
+	public void testCreateLocationDefault() {
+		Location newLocation = new Location();
+		Coordinate cor = newLocation.getCoordinate();
+		assertNotNull(newLocation);
+		assertEquals(cor.getXCoordinate(), 0.0, 0.0000001);
+		assertEquals(cor.getYCoordinate(), 0.0, 0.0000001);
+		assertEquals(cor.getZCoordinate(), 0.0, 0.0000001);
 	}
 
 }

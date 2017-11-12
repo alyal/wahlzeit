@@ -48,6 +48,15 @@ public class CoordinateTest {
 	}
 
 	@Test
+	public void createCoordinateTestDefault() {
+		Coordinate coordinate = new Coordinate();
+		assertNotNull(coordinate);
+		assertEquals(coordinate.getXCoordinate(), 0.0, 0.0000001);
+		assertEquals(coordinate.getYCoordinate(), 0.0, 0.0000001);
+		assertEquals(coordinate.getZCoordinate(), 0.0, 0.0000001);
+	}
+
+	@Test
 	public void getCoordinatesTest() {
 		assertEquals(coordinatesA.getXCoordinate(), 1.0, 0);
 		assertEquals(coordinatesA.getYCoordinate(), 1.0, 0);
@@ -71,7 +80,7 @@ public class CoordinateTest {
 		coordinatesB.setZCoordinate(1.0);
 		assertEquals(coordinatesA.isEqual(coordinatesB), true);
 	}
-	
+
 	@Test
 	public void isEqualHugeValuesTest() {
 		coordinatesB.setXCoordinate(154683.23549);
@@ -82,7 +91,7 @@ public class CoordinateTest {
 		coordinatesA.setZCoordinate(136876.35467);
 		assertEquals(coordinatesA.isEqual(coordinatesB), true);
 	}
-	
+
 	@Test
 	public void isEqualMinimumValuesTest() {
 		coordinatesB.setXCoordinate(0.0023549);
@@ -101,7 +110,7 @@ public class CoordinateTest {
 		coordinatesB.setZCoordinate(1.0);
 		assertEquals(coordinatesA.equals(coordinatesB), true);
 	}
-	
+
 	@Test
 	public void equalsHugeValuesTest() {
 		coordinatesB.setXCoordinate(154683.23549);
@@ -112,7 +121,7 @@ public class CoordinateTest {
 		coordinatesA.setZCoordinate(136876.35467);
 		assertEquals(coordinatesA.equals(coordinatesB), true);
 	}
-	
+
 	@Test
 	public void equalsMinimumValuesTest() {
 		coordinatesB.setXCoordinate(0.0023549);
@@ -123,8 +132,6 @@ public class CoordinateTest {
 		coordinatesA.setZCoordinate(0.0035467);
 		assertEquals(coordinatesA.equals(coordinatesB), true);
 	}
-	
-	
 
 	@Test
 	public void coordinatesAreEqualTest() {
@@ -140,7 +147,7 @@ public class CoordinateTest {
 		assertEquals(coordinatesA.isEqual(coordinatesB), false);
 		assertEquals(coordinatesA.equals(coordinatesB), false);
 	}
-	
+
 	@Test
 	public void coordinatesAreNotEqualDifferentValuesTest() {
 		coordinatesB.setXCoordinate(1.264);
@@ -152,7 +159,7 @@ public class CoordinateTest {
 		assertEquals(coordinatesA.isEqual(coordinatesB), false);
 		assertEquals(coordinatesA.equals(coordinatesB), false);
 	}
-	
+
 	@Test
 	public void coordinatesAreNotEqualOnlyOneDifferentValueTest() {
 		coordinatesB.setXCoordinate(1.0);
@@ -161,7 +168,6 @@ public class CoordinateTest {
 		assertEquals(coordinatesA.isEqual(coordinatesB), false);
 		assertEquals(coordinatesA.equals(coordinatesB), false);
 	}
-	
 
 	@Test(expected = IllegalArgumentException.class)
 	public void coordinatesAreEqualWithNullArgumentTest() {
@@ -175,7 +181,7 @@ public class CoordinateTest {
 		coordinatesB.setZCoordinate(2.0);
 		assertEquals(coordinatesA.getDistance(coordinatesB), 1.732050808, 0.001);
 	}
-	
+
 	@Test
 	public void getDistanceTestHugeValues() {
 		coordinatesA.setXCoordinate(1546.235);
@@ -186,7 +192,7 @@ public class CoordinateTest {
 		coordinatesB.setZCoordinate(8986.265);
 		assertEquals(coordinatesA.getDistance(coordinatesB), 9073.481625, 0.0001);
 	}
-	
+
 	@Test
 	public void getDistanceTestSmallValues() {
 		coordinatesA.setXCoordinate(0.0235);
