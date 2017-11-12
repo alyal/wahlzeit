@@ -24,6 +24,7 @@ package org.wahlzeit.model;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.wahlzeit.model.persistence.DatastoreAdapterTest;
+import org.wahlzeit.model.persistence.PersistenceTestSuite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -37,13 +38,12 @@ import org.wahlzeit.model.persistence.DatastoreAdapterTest;
         TagsTest.class,
         UserStatusTest.class,
         ValueTest.class,
-        DatastoreAdapterTest.class
-
+        PersistenceTestSuite.class
 })
 
 /**
  * Test suite, that collects/combines all model tests  
  *
  */
-public class AllModelTests {
+public class ModelTestSuite {
 }

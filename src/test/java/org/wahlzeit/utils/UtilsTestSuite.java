@@ -18,27 +18,20 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit;
+package org.wahlzeit.utils;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.wahlzeit.handlers.AllHandlerTests;
-import org.wahlzeit.model.AllModelTests;
-import org.wahlzeit.services.AllServiceTests;
-import org.wahlzeit.utils.AllUtilsTests;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AllServiceTests.class,
-        AllHandlerTests.class,
-        AllModelTests.class,
-        AllUtilsTests.class
+        StringUtilTest.class,
+        VersionTest.class
 })
 
 /**
- * Root test suite, that collects/combines all tests of Wahlzeit
- * 
+ * Test suite, that collects/combines all utils tests  
  *
  */
-public class AllTests {
+public class UtilsTestSuite {
 }

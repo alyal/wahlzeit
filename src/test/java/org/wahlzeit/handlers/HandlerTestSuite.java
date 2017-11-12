@@ -18,22 +18,19 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.services;
+package org.wahlzeit.handlers;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.wahlzeit.services.mailing.EmailServiceTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        EmailServiceTest.class,
-        EmailAddressTest.class,
-        LogBuilderTest.class
+        TellFriendTest.class
 })
 
 /**
- * Test suite, that collects/combines all service tests 
+ * Test suite, that collects/combines all handler tests * 
  *
  */
-public class AllServiceTests {
+public class HandlerTestSuite {
 }
