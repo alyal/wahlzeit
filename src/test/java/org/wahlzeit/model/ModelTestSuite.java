@@ -38,7 +38,11 @@ import org.wahlzeit.model.persistence.PersistenceTestSuite;
         TagsTest.class,
         UserStatusTest.class,
         ValueTest.class,
-        PersistenceTestSuite.class
+        PersistenceTestSuite.class,
+        BuildingTest.class,
+        BuildingsPhotoManagerTest.class,
+        BuildingPhotoTest.class,
+        BuildingsPhotoFactoryTest.class
 })
 
 /**
