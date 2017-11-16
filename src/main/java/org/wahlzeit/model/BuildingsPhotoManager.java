@@ -12,6 +12,4 @@ public class BuildingsPhotoManager extends PhotoManager {
 	 */
 	protected static final BuildingsPhotoManager instance = new BuildingsPhotoManager();
 	
-	
-
 }
