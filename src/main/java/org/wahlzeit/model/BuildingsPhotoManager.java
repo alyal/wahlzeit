@@ -11,8 +11,7 @@ public class BuildingsPhotoManager extends PhotoManager {
 	 *
 	 */
 	protected static final BuildingsPhotoManager instance = new BuildingsPhotoManager();
-
-	// Logger if needed any time 
+	
 	private static final Logger log = Logger.getLogger(BuildingsPhotoManager.class.getName());
 
 	/**
@@ -40,6 +39,21 @@ public class BuildingsPhotoManager extends PhotoManager {
 		}
 
 		return result;
+	}
+
+	/**
+	 *
+	 */
+	public static final BuildingsPhotoManager getInstance() {
+		return instance;
+	}
+
+	/**
+	 * 
+	 * 
+	 */
+	protected Logger getLogger() {
+		return log;
 	}
 
 }
