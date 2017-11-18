@@ -42,7 +42,7 @@ public class BuildingsPhotoFactoryTest {
 	
 	@Test
 	public void createPhotoTest() {
-		BuildingPhoto photo = instance.createPhoto();
+		Photo photo = instance.createPhoto();
 		assertNotNull(photo);
 		assertNotNull(photo.getId());
 		
@@ -50,7 +50,7 @@ public class BuildingsPhotoFactoryTest {
 	
 	@Test
 	public void createPhotoTestWithId() {
-		BuildingPhoto photo = instance.createPhoto(new PhotoId(15));
+		Photo photo = instance.createPhoto(new PhotoId(15));
 		assertNotNull(photo);
 		
 		PhotoId id = photo.getId();
@@ -61,7 +61,7 @@ public class BuildingsPhotoFactoryTest {
 	
 	@Test
 	public void createPhotoTestWithBuilding() {
-		BuildingPhoto photo = instance.createPhoto(new Building());
+		BuildingPhoto photo = instance.createBuildingsPhoto(new Building());
 		assertNotNull(photo);
 		assertNotNull(photo.getId());
 		assertNotNull(photo.getBuilding());		

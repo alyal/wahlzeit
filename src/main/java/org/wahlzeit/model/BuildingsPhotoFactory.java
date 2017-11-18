@@ -33,7 +33,7 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	 */
 	public static synchronized BuildingsPhotoFactory getInstance() {
 		if (instance == null) {
-			log.config(LogBuilder.createSystemMessage().addAction("setting generic PhotoFactory").toString());
+			log.config(LogBuilder.createSystemMessage().addAction("setting generic BuildingsPhotoFactory").toString());
 			setInstance(new BuildingsPhotoFactory());
 		}
 
@@ -45,7 +45,7 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	 */
 	protected static synchronized void setInstance(BuildingsPhotoFactory buildingsPhotoFactory) {
 		if (instance != null) {
-			throw new IllegalStateException("attempt to initalize PhotoFactory twice");
+			throw new IllegalStateException("attempt to initalize BuildingsPhotoFactory twice");
 		}
 
 		instance = buildingsPhotoFactory;
@@ -56,21 +56,24 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	/**
 	 * @methodtype factory
 	 */
-	public BuildingPhoto createPhoto() {
+	@Override
+	public Photo createPhoto() {
 		return new BuildingPhoto();
 	}
 
 	/**
 	 * @methodtype factory
 	 */
-	public BuildingPhoto createPhoto(PhotoId id) {
+	@Override
+	public Photo createPhoto(PhotoId id) {
 		return new BuildingPhoto(id);
 	}
 	
 	/**
 	 * @methodtype factory
 	 */
-	public BuildingPhoto createPhoto(Building building) {
+	
+	public BuildingPhoto createBuildingsPhoto(Building building) {
 		return new BuildingPhoto(building);
 	}
 
