@@ -1,6 +1,6 @@
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements ICoordinate {
+public class CartesianCoordinate implements Coordinate {
 
 	private double x = 1.0;
 	private double y = 1.0;
@@ -22,42 +22,117 @@ public class CartesianCoordinate implements ICoordinate {
 		this.z = z;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
 		return this;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public double getCartesianDistance(Coordinate coordinate) {
 		if (coordinate == null) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
-		double deltaX = x - coordinate.getXCoordinate();
-		double deltaY = y - coordinate.getYCoordinate();
-		double deltaZ = z - coordinate.getZCoordinate();
-		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+		return this.getDistance(coordinate);
+
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public double getSphericDistance(Coordinate cor) {
+		SphericCoordinate asSpheric = this.asSphericCoordinate();
+		return asSpheric.getDistance(cor);
+	}
+
+	/**
+	 * 
+	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
 		return computeSpehric();
 	}
 
-	@Override
-	public double getSphericDistance(Coordinate cor) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public double getDistance(Coordinate cor) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (cor == null) {
+			throw new IllegalArgumentException("null as an argument is not allowed!");
+		}
+		CartesianCoordinate cartesianCor = cor.asCartesianCoordinate();
+		double deltaX = x - cartesianCor.getXCoordinate();
+		double deltaY = y - cartesianCor.getYCoordinate();
+		double deltaZ = z - cartesianCor.getZCoordinate();
+		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 	}
 
+	/**
+	 * Forwards coordinates to isEqual()-method after checking if argument is an
+	 * instance of coordinate
+	 * 
+	 * @param obj
+	 *            a Coordinate class Object
+	 * @return boolean
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Coordinate)) {
+			throw new IllegalArgumentException("null as an argument is not allowed!");
+		}
+		return this.isEqual((Coordinate) obj);
+	}
+
+	/**
+	 * When override equals-method, it is necessary to override hashCode. (E.g. see
+	 * Item 9 in EffectiveJava by Joshua Bloch (3. Edition, 2005))
+	 */
+	@Override
+	public int hashCode() {
+		int result = 17;
+		long toLongBits;
+		int c; // int hash code for field
+
+		toLongBits = Double.doubleToLongBits(x);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		toLongBits = Double.doubleToLongBits(y);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		toLongBits = Double.doubleToLongBits(z);
+		c = (int) (toLongBits ^ (toLongBits >>> 32));
+		result = 31 * result + c;
+
+		return result;
+	}
+
+	/**
+	 * 
+	 */
 	@Override
 	public boolean isEqual(Coordinate cor) {
-		// TODO Auto-generated method stub
+		final double delta = 0.0000001;
+
+		CartesianCoordinate asCartesian = cor.asCartesianCoordinate();
+
+		if (Math.abs(x - asCartesian.getXCoordinate()) <= delta) {
+
+			if (Math.abs(y - asCartesian.getYCoordinate()) <= delta) {
+
+				if (Math.abs(z - asCartesian.getZCoordinate()) <= delta) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -69,9 +144,9 @@ public class CartesianCoordinate implements ICoordinate {
 		double radius = calculateRadius();
 		if (radius != 0.0) {
 			// latitude
-			double phi = calculatePhi(radius);
+			double phi = calculatePhi();
 			// longitude
-			double theta = calculateTheta();
+			double theta = calculateTheta(radius);
 
 			return new SphericCoordinate(radius, phi, theta);
 		}
@@ -89,14 +164,14 @@ public class CartesianCoordinate implements ICoordinate {
 	/**
 	 * 
 	 */
-	private double calculatePhi(double radius) {
+	private double calculateTheta(double radius) {
 		return Math.acos(this.getZCoordinate() / radius);
 	}
 
 	/**
 	 * 
 	 */
-	private double calculateTheta() {
+	private double calculatePhi() {
 		return Math.atan2(this.getYCoordinate(), this.getXCoordinate());
 	}
 

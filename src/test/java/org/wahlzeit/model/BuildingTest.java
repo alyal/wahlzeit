@@ -12,7 +12,7 @@ public class BuildingTest {
 	
 	@Before
 	public void setUp() {
-		this.location = new Location();
+		this.location = new Location(new CartesianCoordinate(1.0, 1.0, 1.0));
 	}
 	
 	@Test

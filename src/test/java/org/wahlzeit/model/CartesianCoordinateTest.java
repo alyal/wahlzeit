@@ -1,23 +1,3 @@
-/*
- * Copyright (c) 2017 by alyal, https://github.com/alyal
- *
- * This file is part of the Wahlzeit photo rating application.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public
- * License along with this program. If not, see
- * <http://www.gnu.org/licenses/>.
- */
-
 package org.wahlzeit.model;
 
 import static org.junit.Assert.assertEquals;
@@ -26,22 +6,20 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Test case for the {@Coordinate} class
- *
- */
-public class CoordinateTest {
+public class CartesianCoordinateTest {
 
-	private Coordinate coordinatesA;
-	private Coordinate coordinatesB;
+	
+	private CartesianCoordinate coordinatesA;
+	private CartesianCoordinate coordinatesB;
+	private double DELTA = 0.000001;
 
 	// Arrange before each test
 	@Before
 	public void setUp() {
-		coordinatesA = new Coordinate(1.0, 1.0, 1.0);
-		coordinatesB = new Coordinate(0, 0, 0);
+		coordinatesA = new CartesianCoordinate(1.0, 1.0, 1.0);
+		coordinatesB = new CartesianCoordinate(0.0, 0.0, 0.0);
 	}
-
+	
 	@Test
 	public void createCoordinateTest() {
 		assertNotNull(coordinatesA);
@@ -49,11 +27,11 @@ public class CoordinateTest {
 
 	@Test
 	public void createCoordinateTestDefault() {
-		Coordinate coordinate = new Coordinate();
+		CartesianCoordinate coordinate = new CartesianCoordinate();
 		assertNotNull(coordinate);
-		assertEquals(coordinate.getXCoordinate(), 0.0, 0.0000001);
-		assertEquals(coordinate.getYCoordinate(), 0.0, 0.0000001);
-		assertEquals(coordinate.getZCoordinate(), 0.0, 0.0000001);
+		assertEquals(coordinate.getXCoordinate(), 1.0, 0.0000001);
+		assertEquals(coordinate.getYCoordinate(), 1.0, 0.0000001);
+		assertEquals(coordinate.getZCoordinate(), 1.0, 0.0000001);
 	}
 
 	@Test
@@ -217,4 +195,15 @@ public class CoordinateTest {
 		coordinatesB = null;
 		assertEquals(coordinatesA.getDistance(coordinatesB), 1.732050808, 0.001);
 	}
+	
+	@Test
+	public void asSpericCoordinateTest() {
+		CartesianCoordinate coordinate = new CartesianCoordinate(3.56, 4.56, 5.89);
+		SphericCoordinate asSperic = coordinate.asSphericCoordinate();
+		assertEquals(asSperic.getRadius(), 8.2558645822227	 , DELTA);
+		assertEquals(asSperic.getLatitude(), 0.90793387553656 , DELTA);
+		assertEquals(asSperic.getLongitude(), 0.77641211202797 , DELTA);
+	}
 }
+
+
