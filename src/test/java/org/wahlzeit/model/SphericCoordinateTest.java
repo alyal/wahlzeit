@@ -11,6 +11,7 @@ public class SphericCoordinateTest {
 	private SphericCoordinate spericCoordinateA;
 	private SphericCoordinate spericCoordinateB;
 	private double DELTA = 0.000001;
+	private final double EARTH_RADIUS = 6378.00;
 	
 	@Before
 	public void setUp() {
@@ -68,7 +69,16 @@ public class SphericCoordinateTest {
 	}
 	@Test
 	public void getSphericDistanceTest() {
-		// TODO
+		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
+		SphericCoordinate coordinate2 = new SphericCoordinate(EARTH_RADIUS, 127.5, 12.4);
+		assertEquals(coordinate1.getDistance(coordinate2), 9026.06, 0.01);
+	}
+	
+	@Test
+	public void getSphericDistanceWithOneCartesianTest() {
+		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
+		CartesianCoordinate coordinate2 = new CartesianCoordinate(4.942, 1.087, -3.883);
+		assertEquals(coordinate1.getDistance(coordinate2), 9303.184, 0.01);
 	}
 	
 	

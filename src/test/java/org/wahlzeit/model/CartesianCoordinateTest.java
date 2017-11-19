@@ -204,6 +204,13 @@ public class CartesianCoordinateTest {
 		assertEquals(asSperic.getLatitude(), 0.90793387553656 , DELTA);
 		assertEquals(asSperic.getLongitude(), 0.77641211202797 , DELTA);
 	}
+	
+	@Test
+	public void getCartesianDistanceWithOneSpericTest() {		
+		CartesianCoordinate coordinate1 = new CartesianCoordinate(4.942, 1.087, -3.883);
+		SphericCoordinate coordinate2 = new SphericCoordinate(6378.00, 23.7, 85.3);
+		assertEquals(coordinate1.getDistance(coordinate2), 6373.374, 0.01);
+	}
 }
 
 

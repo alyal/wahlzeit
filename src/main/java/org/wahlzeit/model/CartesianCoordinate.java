@@ -31,7 +31,8 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * returns the distance between this Cartesian Coordinate and another Coordinate
+	 * (spherical or cartesian)
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate coordinate) {
@@ -43,7 +44,9 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the spherical distance between this coordinate and another
+	 * coordinate by transforming this Cartesian coordinate to a Spherical
+	 * coordinate and pass it to the getDistance method of SphericCoordinate class
 	 */
 	@Override
 	public double getSphericDistance(Coordinate cor) {
@@ -52,7 +55,8 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Converts this Cartesian coordinate in a spherical coordinate representation
+	 *@methodtype conversion
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
@@ -60,7 +64,7 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the Distance between two Cartesian coordinates
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {

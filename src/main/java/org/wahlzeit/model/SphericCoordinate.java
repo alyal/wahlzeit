@@ -5,16 +5,17 @@ public class SphericCoordinate implements Coordinate {
 	private double latitude = 0.0;
 	private double longitude = 0.0;
 	private double radius = 0.0;
+	private final double EARTH_RADIUS = 6378.00;
 
 	/**
-	 * 
+	 * @methodtype constructor
 	 */
 	public SphericCoordinate() {
 
 	}
 
 	/**
-	 * 
+	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
 		this.radius = radius;
@@ -23,7 +24,7 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Converts this Spherical coordinate in a Cartesian coordinate representation
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
@@ -31,7 +32,9 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the Cartesian distance between this coordinate and another
+	 * coordinate by transforming this Spherical coordinate to a Cartesian
+	 * coordinate and pass it to the getDistance method of CartesianCoordinate class
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate cor) {
@@ -48,7 +51,8 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * returns the distance between this spherical Coordinate and another Coordinate
+	 * (spherical or cartesian)
 	 */
 	@Override
 	public double getSphericDistance(Coordinate cor) {
@@ -56,21 +60,25 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the Distance between two spherical coordinates
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
 		SphericCoordinate spericCor = cor.asSphericCoordinate();
 
-		double a = Math.pow(this.getRadius(), 2);
-		double b = Math.pow(spericCor.getRadius(), 2);
-		
-		// TODO: Make this nicer, maybe move to a own method: 
-		double c = 2 * a * b * (Math.cos(Math.toRadians(this.getLatitude())) * Math.cos(Math.toRadians(
-				spericCor.getLatitude() * Math.cos(Math.toRadians(this.longitude - spericCor.getLongitude())))));
-		double d = Math.sin(this.latitude) * Math.sin(spericCor.getLatitude());
+		double phi1 = Math.toRadians(this.getLatitude());
+		double phi2 = Math.toRadians(spericCor.getLatitude());
+		double deltaPhi = Math.toRadians(this.getLatitude() - spericCor.getLatitude());
+		double deltaTheta = Math.toRadians(this.getLongitude() - spericCor.getLongitude());
 
-		return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2) - c * (c + d));
+		double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2)
+				+ Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaTheta / 2) * Math.sin(deltaTheta / 2);
+
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+		double distance = EARTH_RADIUS * c;
+
+		return distance;
 	}
 
 	/**
@@ -136,14 +144,16 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * converts this spherical coordinate to a Cartesian coordinate representation
+	 * @methodtype conversion
+	 * @methodproperty composed
 	 */
 	private CartesianCoordinate computeCartesian() {
 		final double sinPhi = Math.sin(Math.toRadians(this.latitude));
 		final double sinTheta = Math.sin(Math.toRadians(this.longitude));
 		final double cosPhi = Math.cos(Math.toRadians(this.latitude));
 		final double cosTheta = Math.cos(Math.toRadians(this.longitude));
-		
+
 		double x = calculateX(radius, sinTheta, cosPhi);
 		double y = calculateY(radius, sinTheta, sinPhi);
 		double z = calculateZ(radius, cosTheta);
@@ -173,45 +183,56 @@ public class SphericCoordinate implements Coordinate {
 	};
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getLongitude() {
 		return longitude;
 	}
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getLatitude() {
 		return latitude;
 	}
 
 	/**
-	 * 
+	 * @methodtype set
 	 */
 	public void setRadius(double r) {
+		if (r < 0) {
+			throw new IllegalArgumentException("Values smaller 0 for Radius are not allowed!");
+		}
 		this.radius = r;
 	}
 
 	/**
-	 * 
+	 * @methodtype set
 	 */
 	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+		if (-90.00 <= latitude && latitude <= 90.00) {
+			this.longitude = longitude;
+		} else {
+			throw new IllegalArgumentException("Value of longitude must be between -90.00 and 90.00");
+		}
 	}
 
 	/**
-	 * 
+	 * @methodtype set
 	 */
 	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+		if (-180.00 <= latitude && latitude <= 180.00) {
+			this.latitude = latitude;
+		} else {
+			throw new IllegalArgumentException("Value of latitude must be between -180.00 and 180.00");
+		}		
 	}
 
 }
