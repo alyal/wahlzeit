@@ -2,10 +2,10 @@ package org.wahlzeit.model;
 
 public class SphericCoordinate implements Coordinate {
 
+	private final double EARTH_RADIUS = 6378.00; // in kilometers
 	private double latitude = 0.0;
 	private double longitude = 0.0;
-	private double radius = 0.0;
-	private final double EARTH_RADIUS = 6378.00;
+	private double radius = EARTH_RADIUS;
 
 	/**
 	 * @methodtype constructor
@@ -30,6 +30,46 @@ public class SphericCoordinate implements Coordinate {
 	public CartesianCoordinate asCartesianCoordinate() {
 		return computeCartesian();
 	}
+
+	/**
+	 * converts this spherical coordinate to a Cartesian coordinate representation
+	 * 
+	 * @methodtype conversion
+	 * @methodproperty composed
+	 */
+	private CartesianCoordinate computeCartesian() {
+		final double sinPhi = Math.sin(Math.toRadians(this.latitude));
+		final double sinTheta = Math.sin(Math.toRadians(this.longitude));
+		final double cosPhi = Math.cos(Math.toRadians(this.latitude));
+		final double cosTheta = Math.cos(Math.toRadians(this.longitude));
+
+		double x = calculateX(radius, sinTheta, cosPhi);
+		double y = calculateY(radius, sinTheta, sinPhi);
+		double z = calculateZ(radius, cosTheta);
+
+		return new CartesianCoordinate(x, y, z);
+	}
+
+	/**
+	 * 
+	 */
+	private double calculateX(double radius, double sinTheta, double cosPhi) {
+		return radius * sinTheta * cosPhi;
+	};
+
+	/**
+	 * 
+	 */
+	private double calculateY(double radius, double sinTheta, double sinPhi) {
+		return radius * sinTheta * sinPhi;
+	};
+
+	/**
+	 * 
+	 */
+	private double calculateZ(double radius, double cosTheta) {
+		return radius * cosTheta;
+	};
 
 	/**
 	 * Calculates the Cartesian distance between this coordinate and another
@@ -142,45 +182,8 @@ public class SphericCoordinate implements Coordinate {
 		}
 		return false;
 	}
-
-	/**
-	 * converts this spherical coordinate to a Cartesian coordinate representation
-	 * @methodtype conversion
-	 * @methodproperty composed
-	 */
-	private CartesianCoordinate computeCartesian() {
-		final double sinPhi = Math.sin(Math.toRadians(this.latitude));
-		final double sinTheta = Math.sin(Math.toRadians(this.longitude));
-		final double cosPhi = Math.cos(Math.toRadians(this.latitude));
-		final double cosTheta = Math.cos(Math.toRadians(this.longitude));
-
-		double x = calculateX(radius, sinTheta, cosPhi);
-		double y = calculateY(radius, sinTheta, sinPhi);
-		double z = calculateZ(radius, cosTheta);
-
-		return new CartesianCoordinate(x, y, z);
-	}
-
-	/**
-	 * 
-	 */
-	private double calculateX(double radius, double sinTheta, double cosPhi) {
-		return radius * sinTheta * cosPhi;
-	};
-
-	/**
-	 * 
-	 */
-	private double calculateY(double radius, double sinTheta, double sinPhi) {
-		return radius * sinTheta * sinPhi;
-	};
-
-	/**
-	 * 
-	 */
-	private double calculateZ(double radius, double cosTheta) {
-		return radius * cosTheta;
-	};
+	
+	// Getter
 
 	/**
 	 * @methodtype get
@@ -203,6 +206,8 @@ public class SphericCoordinate implements Coordinate {
 		return latitude;
 	}
 
+	// SETTER:
+	
 	/**
 	 * @methodtype set
 	 */
@@ -232,7 +237,7 @@ public class SphericCoordinate implements Coordinate {
 			this.latitude = latitude;
 		} else {
 			throw new IllegalArgumentException("Value of latitude must be between -180.00 and 180.00");
-		}		
+		}
 	}
 
 }

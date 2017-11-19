@@ -8,10 +8,9 @@ import org.junit.Test;
 
 public class CartesianCoordinateTest {
 
-	
 	private CartesianCoordinate coordinatesA;
 	private CartesianCoordinate coordinatesB;
-	private double DELTA = 0.000001;
+	private double DELTA = 0.000001; // TODO: Move this to a common Utils class
 
 	// Arrange before each test
 	@Before
@@ -19,7 +18,7 @@ public class CartesianCoordinateTest {
 		coordinatesA = new CartesianCoordinate(1.0, 1.0, 1.0);
 		coordinatesB = new CartesianCoordinate(0.0, 0.0, 0.0);
 	}
-	
+
 	@Test
 	public void createCoordinateTest() {
 		assertNotNull(coordinatesA);
@@ -29,9 +28,9 @@ public class CartesianCoordinateTest {
 	public void createCoordinateTestDefault() {
 		CartesianCoordinate coordinate = new CartesianCoordinate();
 		assertNotNull(coordinate);
-		assertEquals(coordinate.getXCoordinate(), 1.0, 0.0000001);
-		assertEquals(coordinate.getYCoordinate(), 1.0, 0.0000001);
-		assertEquals(coordinate.getZCoordinate(), 1.0, 0.0000001);
+		assertEquals(coordinate.getXCoordinate(), 1.0, DELTA);
+		assertEquals(coordinate.getYCoordinate(), 1.0, DELTA);
+		assertEquals(coordinate.getZCoordinate(), 1.0, DELTA);
 	}
 
 	@Test
@@ -195,22 +194,48 @@ public class CartesianCoordinateTest {
 		coordinatesB = null;
 		assertEquals(coordinatesA.getDistance(coordinatesB), 1.732050808, 0.001);
 	}
-	
+
 	@Test
-	public void asSpericCoordinateTest() {
+	public void asCartesianCoordinateTest() {
+		assertEquals(coordinatesA, coordinatesA.asCartesianCoordinate());
+	}
+
+	@Test
+	public void asSphericCoordinateTest() {
+		CartesianCoordinate coordinate = new CartesianCoordinate(20.0, 0.0, 0.0);
+		SphericCoordinate asSperic = coordinate.asSphericCoordinate();
+		assertEquals(asSperic.getRadius(), 20.0, DELTA);
+		assertEquals(asSperic.getLatitude(), 0.0, DELTA);
+		assertEquals(asSperic.getLongitude(), 1.57079632, DELTA);
+	}
+
+	@Test
+	public void asSphericCoordinateTest2() {
 		CartesianCoordinate coordinate = new CartesianCoordinate(3.56, 4.56, 5.89);
 		SphericCoordinate asSperic = coordinate.asSphericCoordinate();
-		assertEquals(asSperic.getRadius(), 8.2558645822227	 , DELTA);
-		assertEquals(asSperic.getLatitude(), 0.90793387553656 , DELTA);
-		assertEquals(asSperic.getLongitude(), 0.77641211202797 , DELTA);
+		assertEquals(asSperic.getRadius(), 8.2558645822227, DELTA);
+		assertEquals(asSperic.getLatitude(), 0.90793387553656, DELTA);
+		assertEquals(asSperic.getLongitude(), 0.77641211202797, DELTA);
 	}
-	
+
 	@Test
-	public void getCartesianDistanceWithOneSpericTest() {		
+	public void asSphericEqualsTest() {
+		CartesianCoordinate coordinate = new CartesianCoordinate(20.0, 0.0, 0.0);
+		SphericCoordinate coordinate2 = new SphericCoordinate(20.0, 0.0, 1.57079632);
+		assertEquals(coordinate.asSphericCoordinate(), coordinate2);
+	}
+
+	@Test
+	public void getCartesianDistanceWithOneSpericTest() {
 		CartesianCoordinate coordinate1 = new CartesianCoordinate(4.942, 1.087, -3.883);
 		SphericCoordinate coordinate2 = new SphericCoordinate(6378.00, 23.7, 85.3);
 		assertEquals(coordinate1.getDistance(coordinate2), 6373.374, 0.01);
 	}
+
+	@Test
+	public void getSphericDistanceTest() {
+		CartesianCoordinate coordinate1 = new CartesianCoordinate(20.0, 0.0, 0.0);
+		SphericCoordinate coordinate2 = new SphericCoordinate(6378.0, 5.0, 0.0);
+		assertEquals(coordinate1.getSphericDistance(coordinate2), 583.33914053, DELTA);
+	}
 }
-
-

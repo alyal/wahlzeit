@@ -44,26 +44,6 @@ public class CartesianCoordinate implements Coordinate {
 	}
 
 	/**
-	 * Calculates the spherical distance between this coordinate and another
-	 * coordinate by transforming this Cartesian coordinate to a Spherical
-	 * coordinate and pass it to the getDistance method of SphericCoordinate class
-	 */
-	@Override
-	public double getSphericDistance(Coordinate cor) {
-		SphericCoordinate asSpheric = this.asSphericCoordinate();
-		return asSpheric.getDistance(cor);
-	}
-
-	/**
-	 * Converts this Cartesian coordinate in a spherical coordinate representation
-	 *@methodtype conversion
-	 */
-	@Override
-	public SphericCoordinate asSphericCoordinate() {
-		return computeSpehric();
-	}
-
-	/**
 	 * Calculates the Distance between two Cartesian coordinates
 	 */
 	@Override
@@ -76,6 +56,66 @@ public class CartesianCoordinate implements Coordinate {
 		double deltaY = y - cartesianCor.getYCoordinate();
 		double deltaZ = z - cartesianCor.getZCoordinate();
 		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+	}
+
+	/**
+	 * Calculates the spherical distance between this coordinate and another
+	 * coordinate by transforming this Cartesian coordinate to a Spherical
+	 * coordinate and pass it to the getDistance method of SphericCoordinate class
+	 */
+	@Override
+	public double getSphericDistance(Coordinate cor) {
+		SphericCoordinate asSpheric = this.asSphericCoordinate();
+		return asSpheric.getDistance(cor);
+	}
+
+	/**
+	 * Converts this Cartesian coordinate in a spherical coordinate representation
+	 * 
+	 * @methodtype conversion
+	 */
+	@Override
+	public SphericCoordinate asSphericCoordinate() {
+		return computeSpehric();
+	}
+
+	/**
+	 * @methodtype conversion
+	 * @methodproperty composed
+	 */
+	private SphericCoordinate computeSpehric() {
+		double radius = calculateRadius();
+		if (radius != 0.0) {
+			// latitude
+			double phi = calculatePhi();
+			// longitude
+			double theta = calculateTheta(radius);
+
+			return new SphericCoordinate(radius, phi, theta);
+		}
+		return new SphericCoordinate(6378.00, 0.0, 0.0);
+	}
+
+	/**
+	 * 
+	 */
+	private double calculateRadius() {
+		return Math.sqrt(Math.pow(this.getXCoordinate(), 2) + Math.pow(this.getYCoordinate(), 2)
+				+ Math.pow(this.getZCoordinate(), 2));
+	}
+
+	/**
+	 * 
+	 */
+	private double calculateTheta(double radius) {
+		return Math.acos(this.getZCoordinate() / radius);
+	}
+
+	/**
+	 * 
+	 */
+	private double calculatePhi() {
+		return Math.atan2(this.getYCoordinate(), this.getXCoordinate());
 	}
 
 	/**
@@ -140,44 +180,7 @@ public class CartesianCoordinate implements Coordinate {
 		return false;
 	}
 
-	/**
-	 * @methodtype conversion
-	 * @methodproperty composed
-	 */
-	private SphericCoordinate computeSpehric() {
-		double radius = calculateRadius();
-		if (radius != 0.0) {
-			// latitude
-			double phi = calculatePhi();
-			// longitude
-			double theta = calculateTheta(radius);
-
-			return new SphericCoordinate(radius, phi, theta);
-		}
-		return new SphericCoordinate(0.0, 0.0, 0.0);
-	}
-
-	/**
-	 * 
-	 */
-	private double calculateRadius() {
-		return Math.sqrt(Math.pow(this.getXCoordinate(), 2) + Math.pow(this.getYCoordinate(), 2)
-				+ Math.pow(this.getZCoordinate(), 2));
-	}
-
-	/**
-	 * 
-	 */
-	private double calculateTheta(double radius) {
-		return Math.acos(this.getZCoordinate() / radius);
-	}
-
-	/**
-	 * 
-	 */
-	private double calculatePhi() {
-		return Math.atan2(this.getYCoordinate(), this.getXCoordinate());
-	}
+	// Getters
 
 	/**
 	 * 
@@ -199,6 +202,8 @@ public class CartesianCoordinate implements Coordinate {
 	public double getZCoordinate() {
 		return z;
 	}
+
+	// SETTERS:
 
 	/**
 	 * 
