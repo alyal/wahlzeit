@@ -93,4 +93,20 @@ public class SphericCoordinateTest {
 		assertEquals(coordinate1.getDistance(coordinate2), 9303.184, 0.01);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void setNotAllowedRadiusTest() {
+		spericCoordinateA.setRadius(-10);
+		;
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setNotAllowedLatitudeTest() {
+		spericCoordinateA.setLatitude(123);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setNotAllowedLongitudeTest() {
+		spericCoordinateA.setLongitude(234);
+	}
+
 }

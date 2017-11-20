@@ -224,7 +224,7 @@ public class SphericCoordinate implements Coordinate {
 	 * @methodtype set
 	 */
 	public void setLongitude(double longitude) {
-		if (-90.00 <= latitude && latitude <= 90.00) {
+		if (-180.00 <= longitude && longitude <= 180.00) {
 			this.longitude = longitude;
 		} else {
 			throw new IllegalArgumentException("Value of longitude must be between -90.00 and 90.00");
@@ -235,7 +235,7 @@ public class SphericCoordinate implements Coordinate {
 	 * @methodtype set
 	 */
 	public void setLatitude(double latitude) {
-		if (-180.00 <= latitude && latitude <= 180.00) {
+		if (-90.00 <= latitude && latitude <= 90.00) {
 			this.latitude = latitude;
 		} else {
 			throw new IllegalArgumentException("Value of latitude must be between -180.00 and 180.00");
