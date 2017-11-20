@@ -2,7 +2,9 @@ package org.wahlzeit.model;
 
 public class SphericCoordinate implements Coordinate {
 
+	// TODO: Move EARTH_RADIUS to a common Utils class
 	private final double EARTH_RADIUS = 6378.00; // in kilometers
+
 	private double latitude = 0.0;
 	private double longitude = 0.0;
 	private double radius = EARTH_RADIUS;
@@ -182,7 +184,7 @@ public class SphericCoordinate implements Coordinate {
 		}
 		return false;
 	}
-	
+
 	// Getter
 
 	/**
@@ -207,7 +209,7 @@ public class SphericCoordinate implements Coordinate {
 	}
 
 	// SETTER:
-	
+
 	/**
 	 * @methodtype set
 	 */

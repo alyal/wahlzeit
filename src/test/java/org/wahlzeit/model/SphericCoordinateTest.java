@@ -54,22 +54,29 @@ public class SphericCoordinateTest {
 	}
 
 	@Test
+	public void equalsTest() {
+		spericCoordinateA.setRadius(5.56);
+		spericCoordinateA.setLatitude(60.5);
+		spericCoordinateA.setLongitude(35.4);
+		assertEquals(spericCoordinateA.equals(spericCoordinateB), true);
+	}
+
+	@Test
 	public void asSphericCoordinateTest() {
 		assertEquals(spericCoordinateA, spericCoordinateA.asSphericCoordinate());
 	}
 
 	@Test
-	public void asCartesianCoodinateTest() {
+	public void asSphericCoordinateTest2() {
+		assertEquals(spericCoordinateB, spericCoordinateB.asSphericCoordinate());
+	}
+
+	@Test
+	public void asCartesianCoordinateTest() {
 		CartesianCoordinate asCartesian = spericCoordinateB.asCartesianCoordinate();
 		assertEquals(asCartesian.getXCoordinate(), 1.585999436, DELTA);
 		assertEquals(asCartesian.getYCoordinate(), 2.803244514, DELTA);
 		assertEquals(asCartesian.getZCoordinate(), 4.532110544, DELTA);
-	}
-
-	@Test
-	public void asSpericCoodinateTest() {
-		assertEquals(spericCoordinateB, spericCoordinateB.asSphericCoordinate());
-
 	}
 
 	@Test

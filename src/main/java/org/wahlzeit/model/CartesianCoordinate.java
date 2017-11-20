@@ -51,6 +51,7 @@ public class CartesianCoordinate implements Coordinate {
 		if (cor == null) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
+
 		CartesianCoordinate cartesianCor = cor.asCartesianCoordinate();
 		double deltaX = x - cartesianCor.getXCoordinate();
 		double deltaY = y - cartesianCor.getYCoordinate();
@@ -73,17 +74,18 @@ public class CartesianCoordinate implements Coordinate {
 	 * Converts this Cartesian coordinate in a spherical coordinate representation
 	 * 
 	 * @methodtype conversion
+	 * @methodproperty primitive
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		return computeSpehric();
+		return computeSpheric();
 	}
 
 	/**
 	 * @methodtype conversion
 	 * @methodproperty composed
 	 */
-	private SphericCoordinate computeSpehric() {
+	private SphericCoordinate computeSpheric() {
 		double radius = calculateRadius();
 		if (radius != 0.0) {
 			// latitude
