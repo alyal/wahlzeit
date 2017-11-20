@@ -20,6 +20,16 @@ public class SphericCoordinate implements Coordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
+		if (radius < 0) {
+			throw new IllegalArgumentException("Values smaller 0 for Radius are not allowed!");
+		}
+		if (latitude < -90.00 || latitude > 90.00) {
+			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
+		}
+		if (longitude < -180.00 || longitude > 180.00) {
+			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
+		}
+
 		this.radius = radius;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -224,22 +234,20 @@ public class SphericCoordinate implements Coordinate {
 	 * @methodtype set
 	 */
 	public void setLongitude(double longitude) {
-		if (-180.00 <= longitude && longitude <= 180.00) {
-			this.longitude = longitude;
-		} else {
-			throw new IllegalArgumentException("Value of longitude must be between -90.00 and 90.00");
+		if (longitude < -180.00 || longitude > 180.00) {
+			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
 		}
+		this.longitude = longitude;
 	}
 
 	/**
 	 * @methodtype set
 	 */
 	public void setLatitude(double latitude) {
-		if (-90.00 <= latitude && latitude <= 90.00) {
-			this.latitude = latitude;
-		} else {
-			throw new IllegalArgumentException("Value of latitude must be between -180.00 and 180.00");
+		if (latitude < -90.00 || latitude > 90.00) {
+			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
 		}
+		this.latitude = latitude;
 	}
 
 }

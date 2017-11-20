@@ -82,8 +82,8 @@ public class SphericCoordinateTest {
 	@Test
 	public void getSphericDistanceTest() {
 		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
-		SphericCoordinate coordinate2 = new SphericCoordinate(EARTH_RADIUS, 127.5, 12.4);
-		assertEquals(coordinate1.getDistance(coordinate2), 9026.06, 0.01);
+		SphericCoordinate coordinate2 = new SphericCoordinate(EARTH_RADIUS, 89.5, 12.4);
+		assertEquals(coordinate1.getDistance(coordinate2), 7364.0555, 0.01);
 	}
 
 	@Test
@@ -96,7 +96,6 @@ public class SphericCoordinateTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedRadiusTest() {
 		spericCoordinateA.setRadius(-10);
-		;
 	}
 
 	@Test(expected = IllegalArgumentException.class)
