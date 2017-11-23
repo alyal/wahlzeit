@@ -21,7 +21,7 @@ public class SphericCoordinate implements Coordinate {
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
 		if (radius < 0) {
-			throw new IllegalArgumentException("Values smaller 0 for Radius are not allowed!");
+			throw new IllegalArgumentException("Values smaller 0 for radius are not allowed!");
 		}
 		if (latitude < -90.00 || latitude > 90.00) {
 			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
@@ -116,12 +116,12 @@ public class SphericCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
-		SphericCoordinate spericCor = cor.asSphericCoordinate();
+		SphericCoordinate sphericCor = cor.asSphericCoordinate();
 
 		double phi1 = Math.toRadians(this.getLatitude());
-		double phi2 = Math.toRadians(spericCor.getLatitude());
-		double deltaPhi = Math.toRadians(this.getLatitude() - spericCor.getLatitude());
-		double deltaTheta = Math.toRadians(this.getLongitude() - spericCor.getLongitude());
+		double phi2 = Math.toRadians(sphericCor.getLatitude());
+		double deltaPhi = Math.toRadians(this.getLatitude() - sphericCor.getLatitude());
+		double deltaTheta = Math.toRadians(this.getLongitude() - sphericCor.getLongitude());
 
 		double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2)
 				+ Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaTheta / 2) * Math.sin(deltaTheta / 2);
@@ -143,10 +143,10 @@ public class SphericCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Coordinate)) {
+		if (!(obj instanceof SphericCoordinate)) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
-		return this.isEqual((Coordinate) obj);
+		return this.isEqual((SphericCoordinate) obj);
 	}
 
 	/**

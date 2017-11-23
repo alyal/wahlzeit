@@ -130,10 +130,10 @@ public class CartesianCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Coordinate)) {
+		if (!(obj instanceof CartesianCoordinate)) {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
-		return this.isEqual((Coordinate) obj);
+		return this.isEqual((CartesianCoordinate) obj);
 	}
 
 	/**
