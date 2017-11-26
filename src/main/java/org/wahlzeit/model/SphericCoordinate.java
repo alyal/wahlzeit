@@ -21,7 +21,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public SphericCoordinate(double radius, double latitude, double longitude) {
 		assertRadius(radius);
 		assertLatitude(latitude);
-		asserLongitude(longitude);
+		assertLongitude(longitude);
 
 		this.radius = radius;
 		this.latitude = latitude;
@@ -65,7 +65,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype set
 	 */
 	public void setLongitude(double longitude) {
-		asserLongitude(longitude);
+		assertLongitude(longitude);
 		this.longitude = longitude;
 	}
 
@@ -230,7 +230,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype assertion
 	 */
-	private void asserLongitude(double longitude) {
+	private void assertLongitude(double longitude) {
 		if (longitude < ParamsUtil.MIN_LONGITUDE || longitude > ParamsUtil.MAX_LONGITUDE) {
 			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
 		}
