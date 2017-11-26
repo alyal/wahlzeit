@@ -33,5 +33,4 @@ public interface Coordinate {
 	 * Checks if a Coordinate is equal to another one
 	 */
 	boolean isEqual(Coordinate cor);
-
 }

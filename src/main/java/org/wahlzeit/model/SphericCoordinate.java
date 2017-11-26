@@ -1,13 +1,12 @@
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate {
+import org.wahlzeit.utils.ParamsUtil;
 
-	// TODO: Move EARTH_RADIUS to a common Utils class
-	private final double EARTH_RADIUS = 6378.00; // in kilometers
+public class SphericCoordinate extends AbstractCoordinate {
 
 	private double latitude = 0.0;
 	private double longitude = 0.0;
-	private double radius = EARTH_RADIUS;
+	private double radius = ParamsUtil.EARTH_RADIUS;
 
 	/**
 	 * @methodtype constructor
@@ -20,19 +19,62 @@ public class SphericCoordinate implements Coordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
-		if (radius < 0) {
-			throw new IllegalArgumentException("Values smaller 0 for radius are not allowed!");
-		}
-		if (latitude < -90.00 || latitude > 90.00) {
-			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
-		}
-		if (longitude < -180.00 || longitude > 180.00) {
-			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
-		}
+		assertRadius(radius);
+		assertLatitude(latitude);
+		asserLongitude(longitude);
 
 		this.radius = radius;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+
+	// Getter
+
+	/**
+	 * @methodtype get
+	 */
+	public double getRadius() {
+		return radius;
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
+
+	// SETTER:
+
+	/**
+	 * @methodtype set
+	 */
+	public void setRadius(double r) {
+		assertRadius(r);
+		this.radius = r;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setLongitude(double longitude) {
+		asserLongitude(longitude);
+		this.longitude = longitude;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setLatitude(double latitude) {
+		assertLatitude(latitude);
+		this.latitude = latitude;
 	}
 
 	/**
@@ -88,13 +130,12 @@ public class SphericCoordinate implements Coordinate {
 	 * coordinate by transforming this Spherical coordinate to a Cartesian
 	 * coordinate and pass it to the getDistance method of CartesianCoordinate class
 	 */
-	@Override
-	public double getCartesianDistance(Coordinate cor) {
-		CartesianCoordinate asCartesian = this.asCartesianCoordinate();
-		return asCartesian.getDistance(cor);
-	}
-
-	/**
+	/*
+	 * @Override public double getCartesianDistance(Coordinate cor) {
+	 * assertNotNull(cor); CartesianCoordinate asCartesian =
+	 * this.asCartesianCoordinate(); return asCartesian.getDistance(cor); }/*
+	 * 
+	 * /**
 	 * 
 	 */
 	@Override
@@ -106,16 +147,13 @@ public class SphericCoordinate implements Coordinate {
 	 * returns the distance between this spherical Coordinate and another Coordinate
 	 * (spherical or cartesian)
 	 */
-	@Override
-	public double getSphericDistance(Coordinate cor) {
-		return this.getDistance(cor);
-	}
-
-	/**
-	 * Calculates the Distance between two spherical coordinates
+	/*
+	 * @Override public double getSphericDistance(Coordinate cor) {
+	 * assertNotNull(cor); return this.getDistance(cor); }
 	 */
+
 	@Override
-	public double getDistance(Coordinate cor) {
+	public double calculateDistance(Coordinate cor) {
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
 
 		double phi1 = Math.toRadians(this.getLatitude());
@@ -128,26 +166,32 @@ public class SphericCoordinate implements Coordinate {
 
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-		double distance = EARTH_RADIUS * c;
+		double distance = ParamsUtil.EARTH_RADIUS * c;
 
 		return distance;
 	}
 
 	/**
-	 * Forwards coordinates to isEqual()-method after checking if argument is an
-	 * instance of coordinate
-	 * 
-	 * @param obj
-	 *            a Coordinate class Object
-	 * @return boolean
+	 * Calculates the Distance between two spherical coordinates
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof SphericCoordinate)) {
-			throw new IllegalArgumentException("null as an argument is not allowed!");
-		}
-		return this.isEqual((SphericCoordinate) obj);
-	}
+	/*
+	 * @Override public double getDistance(Coordinate cor) { SphericCoordinate
+	 * sphericCor = cor.asSphericCoordinate();
+	 * 
+	 * double phi1 = Math.toRadians(this.getLatitude()); double phi2 =
+	 * Math.toRadians(sphericCor.getLatitude()); double deltaPhi =
+	 * Math.toRadians(this.getLatitude() - sphericCor.getLatitude()); double
+	 * deltaTheta = Math.toRadians(this.getLongitude() - sphericCor.getLongitude());
+	 * 
+	 * double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) + Math.cos(phi1) *
+	 * Math.cos(phi2) * Math.sin(deltaTheta / 2) * Math.sin(deltaTheta / 2);
+	 * 
+	 * double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	 * 
+	 * double distance = ParamsUtil.EARTH_RADIUS * c;
+	 * 
+	 * return distance; }
+	 */
 
 	/**
 	 * When override equals-method, it is necessary to override hashCode. (E.g. see
@@ -179,15 +223,14 @@ public class SphericCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate coordinate) {
-		final double delta = 0.0000001;
 
 		SphericCoordinate asSpheric = coordinate.asSphericCoordinate();
 
-		if (Math.abs(this.latitude - asSpheric.getLatitude()) <= delta) {
+		if (Math.abs(this.latitude - asSpheric.getLatitude()) <= ParamsUtil.DELTA) {
 
-			if (Math.abs(this.longitude - asSpheric.getLongitude()) <= delta) {
+			if (Math.abs(this.longitude - asSpheric.getLongitude()) <= ParamsUtil.DELTA) {
 
-				if (Math.abs(this.radius - asSpheric.getRadius()) <= delta) {
+				if (Math.abs(this.radius - asSpheric.getRadius()) <= ParamsUtil.DELTA) {
 					return true;
 				}
 			}
@@ -195,59 +238,34 @@ public class SphericCoordinate implements Coordinate {
 		return false;
 	}
 
-	// Getter
+	// Assertion methods
 
 	/**
-	 * @methodtype get
+	 * @methodtype assertion
 	 */
-	public double getRadius() {
-		return radius;
-	}
-
-	/**
-	 * @methodtype get
-	 */
-	public double getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @methodtype get
-	 */
-	public double getLatitude() {
-		return latitude;
-	}
-
-	// SETTER:
-
-	/**
-	 * @methodtype set
-	 */
-	public void setRadius(double r) {
-		if (r < 0) {
-			throw new IllegalArgumentException("Values smaller 0 for Radius are not allowed!");
+	private void assertRadius(double radius) {
+		if (radius < 0) {
+			throw new IllegalArgumentException("Values smaller 0 for radius are not allowed!");
 		}
-		this.radius = r;
 	}
 
 	/**
-	 * @methodtype set
+	 * @methodtype assertion
 	 */
-	public void setLongitude(double longitude) {
-		if (longitude < -180.00 || longitude > 180.00) {
-			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
-		}
-		this.longitude = longitude;
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setLatitude(double latitude) {
-		if (latitude < -90.00 || latitude > 90.00) {
+	private void assertLatitude(double latitude) {
+		if (latitude < ParamsUtil.MIN_LATITUDE || latitude > ParamsUtil.MAX_LATITUDE) {
 			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
 		}
-		this.latitude = latitude;
+
+	}
+
+	/**
+	 * @methodtype assertion
+	 */
+	private void asserLongitude(double longitude) {
+		if (longitude < ParamsUtil.MIN_LONGITUDE || longitude > ParamsUtil.MAX_LONGITUDE) {
+			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
+		}
 	}
 
 }
