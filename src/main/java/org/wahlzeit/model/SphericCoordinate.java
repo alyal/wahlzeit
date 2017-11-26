@@ -135,6 +135,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
+		assertNotNull(cor);
 		return getSphericDistance(cor);
 	}
 
@@ -144,6 +145,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double calculateDistance(Coordinate cor) {
+		assertNotNull(cor);
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
 
 		double phi1 = Math.toRadians(this.getLatitude());

@@ -83,6 +83,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
+		assertNotNull(cor);
 		return getCartesianDistance(cor);
 	}
 
@@ -176,6 +177,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate cor) {
+		assertNotNull(cor);
 		CartesianCoordinate asCartesian = cor.asCartesianCoordinate();
 
 		if (Math.abs(x - asCartesian.getXCoordinate()) <= ParamsUtil.DELTA) {
