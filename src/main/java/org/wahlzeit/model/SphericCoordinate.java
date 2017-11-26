@@ -125,33 +125,23 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return radius * cosTheta;
 	};
 
-	/**
-	 * Calculates the Cartesian distance between this coordinate and another
-	 * coordinate by transforming this Spherical coordinate to a Cartesian
-	 * coordinate and pass it to the getDistance method of CartesianCoordinate class
-	 */
-	/*
-	 * @Override public double getCartesianDistance(Coordinate cor) {
-	 * assertNotNull(cor); CartesianCoordinate asCartesian =
-	 * this.asCartesianCoordinate(); return asCartesian.getDistance(cor); }/*
-	 * 
-	 * /**
-	 * 
-	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
 		return this;
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public double getDistance(Coordinate cor) {
+		return getSphericDistance(cor);
+	}
+
+	/**
 	 * returns the distance between this spherical Coordinate and another Coordinate
 	 * (spherical or cartesian)
 	 */
-	/*
-	 * @Override public double getSphericDistance(Coordinate cor) {
-	 * assertNotNull(cor); return this.getDistance(cor); }
-	 */
-
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
@@ -170,28 +160,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 		return distance;
 	}
-
-	/**
-	 * Calculates the Distance between two spherical coordinates
-	 */
-	/*
-	 * @Override public double getDistance(Coordinate cor) { SphericCoordinate
-	 * sphericCor = cor.asSphericCoordinate();
-	 * 
-	 * double phi1 = Math.toRadians(this.getLatitude()); double phi2 =
-	 * Math.toRadians(sphericCor.getLatitude()); double deltaPhi =
-	 * Math.toRadians(this.getLatitude() - sphericCor.getLatitude()); double
-	 * deltaTheta = Math.toRadians(this.getLongitude() - sphericCor.getLongitude());
-	 * 
-	 * double a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) + Math.cos(phi1) *
-	 * Math.cos(phi2) * Math.sin(deltaTheta / 2) * Math.sin(deltaTheta / 2);
-	 * 
-	 * double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	 * 
-	 * double distance = ParamsUtil.EARTH_RADIUS * c;
-	 * 
-	 * return distance; }
-	 */
 
 	/**
 	 * When override equals-method, it is necessary to override hashCode. (E.g. see

@@ -23,10 +23,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * 
 	 */
 	@Override
+	public abstract double getDistance(Coordinate cor);
+
+	/**
+	 * 
+	 */
+	@Override
 	public double getCartesianDistance(Coordinate cor) {
 		assertNotNull(cor);
 		CartesianCoordinate asCartesian = this.asCartesianCoordinate();
-		return asCartesian.getDistance(cor);
+		return asCartesian.calculateDistance(cor);
 	}
 
 	/**
@@ -35,18 +41,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getSphericDistance(Coordinate cor) {
 		assertNotNull(cor);
-		SphericCoordinate asSpheric = this.asSphericCoordinate();
-		return asSpheric.getDistance(cor);
+		SphericCoordinate asSphericCoordinate = this.asSphericCoordinate();
+		return asSphericCoordinate.calculateDistance(cor);
 	};
-
-	/**
-	 * 
-	 */
-	@Override
-	public double getDistance(Coordinate cor) {
-		assertNotNull(cor);
-		return calculateDistance(cor);
-	}
 
 	/**
 	 * 

@@ -79,32 +79,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * returns the distance between this Cartesian Coordinate and another Coordinate
-	 * (spherical or cartesian)
-	 */
-	/*
-	 * @Override public double getCartesianDistance(Coordinate coordinate) { if
-	 * (coordinate == null) { throw new
-	 * IllegalArgumentException("null as an argument is not allowed!"); } return
-	 * this.getDistance(coordinate);
 	 * 
-	 * }
 	 */
-
-	/**
-	 * Calculates the Distance between two Cartesian coordinates
-	 */
-
-	/*
-	 * @Override public double getDistance(Coordinate cor) { if (cor == null) {
-	 * throw new IllegalArgumentException("null as an argument is not allowed!"); }
-	 * 
-	 * CartesianCoordinate cartesianCor = cor.asCartesianCoordinate(); double deltaX
-	 * = x - cartesianCor.getXCoordinate(); double deltaY = y -
-	 * cartesianCor.getYCoordinate(); double deltaZ = z -
-	 * cartesianCor.getZCoordinate(); return Math.sqrt(Math.pow(deltaX, 2) +
-	 * Math.pow(deltaY, 2) + Math.pow(deltaZ, 2)); }
-	 */
+	@Override
+	public double getDistance(Coordinate cor) {
+		return getCartesianDistance(cor);
+	}
 
 	@Override
 	public double calculateDistance(Coordinate cor) {
@@ -115,17 +95,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		double deltaZ = z - cartesianCor.getZCoordinate();
 		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 	}
-
-	/**
-	 * Calculates the spherical distance between this coordinate and another
-	 * coordinate by transforming this Cartesian coordinate to a Spherical
-	 * coordinate and pass it to the getDistance method of SphericCoordinate class
-	 */
-	/*
-	 * @Override public double getSphericDistance(Coordinate cor) {
-	 * SphericCoordinate asSpheric = this.asSphericCoordinate(); return
-	 * asSpheric.getDistance(cor); }
-	 */
 
 	/**
 	 * Converts this Cartesian coordinate in a spherical coordinate representation
