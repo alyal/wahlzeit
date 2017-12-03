@@ -19,6 +19,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
+		assertClassInvariants();
+
 		assertRadius(radius);
 		assertLatitude(latitude);
 		assertLongitude(longitude);
@@ -26,6 +28,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 		this.radius = radius;
 		this.latitude = latitude;
 		this.longitude = longitude;
+
+		assertClassInvariants();
 	}
 
 	// Getter
@@ -58,7 +62,12 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setRadius(double r) {
 		assertRadius(r);
+
 		this.radius = r;
+		
+		assertCorrectRadiusSet(r);
+		assertClassInvariants();
+
 	}
 
 	/**
@@ -66,7 +75,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setLongitude(double longitude) {
 		assertLongitude(longitude);
+
 		this.longitude = longitude;
+		
+		assertCorrectLongitudeSet(longitude);
+		assertClassInvariants();
 	}
 
 	/**
@@ -74,7 +87,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setLatitude(double latitude) {
 		assertLatitude(latitude);
+
 		this.latitude = latitude;
+		
+		assertCorrectLatitudeSet(latitude);
+		assertClassInvariants();
 	}
 
 	/**
@@ -82,7 +99,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		return computeCartesian();
+		CartesianCoordinate cartesian = computeCartesian();
+		assertCartesianRepresenatation(cartesian);
+		return cartesian;
 	}
 
 	/**
@@ -128,16 +147,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
 		return this;
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	public double getDistance(Coordinate cor) {
-		assertNotNull(cor);
-		return getSphericDistance(cor);
-	}
+	}	
 
 	/**
 	 * returns the distance between this spherical Coordinate and another Coordinate
@@ -146,6 +156,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		assertNotNull(cor);
+
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
 
 		double phi1 = Math.toRadians(this.getLatitude());
@@ -159,6 +170,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 		double distance = ParamsUtil.EARTH_RADIUS * c;
+
+		assertDistance(distance);
 
 		return distance;
 	}
@@ -193,7 +206,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate coordinate) {
-
+		assertNotNull(coordinate);
 		SphericCoordinate asSpheric = coordinate.asSphericCoordinate();
 
 		if (Math.abs(this.latitude - asSpheric.getLatitude()) <= ParamsUtil.DELTA) {
@@ -205,37 +218,37 @@ public class SphericCoordinate extends AbstractCoordinate {
 				}
 			}
 		}
+
 		return false;
 	}
 
-	// Assertion methods
-
 	/**
-	 * @methodtype assertion
+	 * @methodtype: assertion
 	 */
-	private void assertRadius(double radius) {
-		if (radius < 0) {
-			throw new IllegalArgumentException("Values smaller 0 for radius are not allowed!");
-		}
+	private void assertClassInvariants() {
+		// for now in my opinion there are no real invariants. Anyway for now I do some
+		// null checks on the class fields
+		assertNotNull(this.getLatitude());
+		assertNotNull(this.getLongitude());
+		assertNotNull(this.getRadius());
 	}
-
+	
 	/**
-	 * @methodtype assertion
+	 * @methodtype: assertion
 	 */
-	private void assertLatitude(double latitude) {
-		if (latitude < ParamsUtil.MIN_LATITUDE || latitude > ParamsUtil.MAX_LATITUDE) {
-			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
-		}
-
+	private void assertCorrectLongitudeSet(double setValue) {
+		assert this.getLongitude() == setValue;
 	}
-
 	/**
-	 * @methodtype assertion
+	 * @methodtype: assertion
 	 */
-	private void assertLongitude(double longitude) {
-		if (longitude < ParamsUtil.MIN_LONGITUDE || longitude > ParamsUtil.MAX_LONGITUDE) {
-			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
-		}
+	private void assertCorrectLatitudeSet(double setValue) {
+		assert this.getLatitude() == setValue;
 	}
-
+	/**
+	 * @methodtype: assertion
+	 */
+	private void assertCorrectRadiusSet(double setValue) {
+		assert this.getRadius() == setValue;
+	}
 }

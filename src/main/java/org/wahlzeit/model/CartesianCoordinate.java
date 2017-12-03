@@ -19,9 +19,15 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public CartesianCoordinate(double x, double y, double z) {
+		assertClassInvariants();
+
+		// TODO: add preconditions for valid Coordinate input arguments
+
 		this.x = x;
 		this.y = y;
 		this.z = z;
+
+		assertClassInvariants();
 	}
 
 	// Getters
@@ -54,6 +60,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	public void setXCoordinate(double x) {
 		this.x = x;
+		assertCorrectXValueSet(x);
+		assertClassInvariants();
 	}
 
 	/**
@@ -61,6 +69,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	public void setYCoordinate(double y) {
 		this.y = y;
+		assertCorrectYValueSet(y);
+		assertClassInvariants();
 	}
 
 	/**
@@ -68,6 +78,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	public void setZCoordinate(double z) {
 		this.z = z;
+		assertCorrectZValueSet(z);
+		assertClassInvariants();
 	}
 
 	/**
@@ -78,23 +90,18 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		return this;
 	}
 
-	/**
-	 * 
-	 */
-	@Override
-	public double getDistance(Coordinate cor) {
-		assertNotNull(cor);
-		return getCartesianDistance(cor);
-	}
-
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		assertNotNull(cor);
+
 		CartesianCoordinate cartesianCor = cor.asCartesianCoordinate();
 		double deltaX = x - cartesianCor.getXCoordinate();
 		double deltaY = y - cartesianCor.getYCoordinate();
 		double deltaZ = z - cartesianCor.getZCoordinate();
-		return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+		double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+
+		assertDistance(distance);
+		return distance;
 	}
 
 	/**
@@ -105,7 +112,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		return computeSpheric();
+		SphericCoordinate spheric = computeSpheric();
+		assertSphericRepresenatation(spheric);
+		return spheric;
 	}
 
 	/**
@@ -129,22 +138,29 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	private double calculateRadius() {
-		return Math.sqrt(Math.pow(this.getXCoordinate(), 2) + Math.pow(this.getYCoordinate(), 2)
+		double radius = Math.sqrt(Math.pow(this.getXCoordinate(), 2) + Math.pow(this.getYCoordinate(), 2)
 				+ Math.pow(this.getZCoordinate(), 2));
+		assertRadius(radius);
+		return radius;
 	}
 
 	/**
 	 * 
 	 */
 	private double calculateTheta(double radius) {
-		return Math.acos(this.getZCoordinate() / radius);
+		assertNotNull(radius);
+		double theta = Math.acos(this.getZCoordinate() / radius);
+		assertLongitude(theta);
+		return theta;
 	}
 
 	/**
 	 * 
 	 */
 	private double calculatePhi() {
-		return Math.atan2(this.getYCoordinate(), this.getXCoordinate());
+		double phi = Math.atan2(this.getYCoordinate(), this.getXCoordinate());
+		assertLatitude(phi);
+		return phi;
 	}
 
 	/**
@@ -190,6 +206,38 @@ public class CartesianCoordinate extends AbstractCoordinate {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @methodtype: assertion
+	 */
+	private void assertClassInvariants() {
+		// for now in my opinion there are no real invariants. Anyway for now I do some
+		// null checks on the class fields
+		assertNotNull(this.getXCoordinate());
+		assertNotNull(this.getYCoordinate());
+		assertNotNull(this.getZCoordinate());
+	}
+
+	/**
+	 * @methodtype: assertion
+	 */
+	private void assertCorrectXValueSet(double setValue) {
+		assert this.getXCoordinate() == setValue;
+	}
+
+	/**
+	 * @methodtype: assertion
+	 */
+	private void assertCorrectYValueSet(double setValue) {
+		assert this.getYCoordinate() == setValue;
+	}
+
+	/**
+	 * @methodtype: assertion
+	 */
+	private void assertCorrectZValueSet(double setValue) {
+		assert this.getZCoordinate() == setValue;
 	}
 
 }

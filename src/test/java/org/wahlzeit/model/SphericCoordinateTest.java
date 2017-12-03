@@ -83,14 +83,14 @@ public class SphericCoordinateTest {
 	public void getSphericDistanceTest() {
 		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
 		SphericCoordinate coordinate2 = new SphericCoordinate(EARTH_RADIUS, 89.5, 12.4);
-		assertEquals(coordinate1.getDistance(coordinate2), 7364.0555, 0.01);
+		assertEquals(coordinate1.getSphericDistance(coordinate2), 7364.0555, 0.01);
 	}
 
 	@Test
 	public void getSphericDistanceWithOneCartesianTest() {
 		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
 		CartesianCoordinate coordinate2 = new CartesianCoordinate(4.942, 1.087, -3.883);
-		assertEquals(coordinate1.getDistance(coordinate2), 9303.184, 0.01);
+		assertEquals(coordinate1.getSphericDistance(coordinate2), 9303.184, 0.01);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
