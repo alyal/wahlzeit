@@ -59,14 +59,8 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	 * @methodtype factory
 	 */
 	@Override
-	public Photo createPhoto() throws PhotoFactoryCreationException {
-		Photo photo;
-		try {
-			photo = new BuildingPhoto();
-		} catch (Exception e) {
-			throw new PhotoFactoryCreationException(e.getMessage());
-		}
-		return photo;
+	public Photo createPhoto() {
+		return new BuildingPhoto();
 	}
 
 	/**
