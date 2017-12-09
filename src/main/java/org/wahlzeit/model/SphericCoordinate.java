@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.exceptions.SettingErrorException;
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
+import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
 public class SphericCoordinate extends AbstractCoordinate {
@@ -161,7 +162,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		assertClassInvariants();
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor, this.getClass().getSimpleName());
 
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
 
@@ -213,7 +214,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate coordinate) {
-		assertNotNull(coordinate);
+		AssertionUtils.assertNotNull(coordinate, this.getClass().getSimpleName());
 		SphericCoordinate asSpheric = coordinate.asSphericCoordinate();
 
 		if (Math.abs(this.getLatitude() - asSpheric.getLatitude()) <= ParamsUtil.DELTA) {
@@ -242,7 +243,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype assertion
 	 */
 	public void assertCartesianRepresenatation(Coordinate isCartesian) throws WrongCoordinateTypeException {
-		assertNotNull(isCartesian);
+		AssertionUtils.assertNotNull(isCartesian, this.getClass().getSimpleName());
 		if (!(isCartesian instanceof CartesianCoordinate)) {
 			throw new WrongCoordinateTypeException(isCartesian);
 		}

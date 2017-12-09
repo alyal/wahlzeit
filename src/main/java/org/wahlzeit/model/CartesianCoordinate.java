@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
+import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
 public class CartesianCoordinate extends AbstractCoordinate {
@@ -19,7 +20,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
 		assertClassInvariants();
 
 		assertDouble(x);
@@ -99,7 +100,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		assertClassInvariants();
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor, this.getClass().getSimpleName());
 
 		CartesianCoordinate cartesianCor = cor.asCartesianCoordinate();
 		double deltaX = x - cartesianCor.getXCoordinate();
@@ -156,7 +157,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	private double calculateTheta(double radius) {
-		assertNotNull(radius);
+		AssertionUtils.assertNotNull(radius, this.getClass().getSimpleName());
 		double theta = Math.acos(this.getZCoordinate() / radius);
 		assertLongitude(theta);
 		return theta;
@@ -201,7 +202,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate cor) {
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor, this.getClass().getSimpleName());
 		CartesianCoordinate asCartesian = cor.asCartesianCoordinate();
 
 		if (Math.abs(x - asCartesian.getXCoordinate()) <= ParamsUtil.DELTA) {
@@ -229,7 +230,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype assertion
 	 */
 	public void assertSphericRepresenatation(Coordinate isSpheric) {
-		assertNotNull(isSpheric);
+		AssertionUtils.assertNotNull(isSpheric, this.getClass().getSimpleName());
 		if (!(isSpheric instanceof SphericCoordinate)) {
 			throw new WrongCoordinateTypeException(isSpheric);
 		}
