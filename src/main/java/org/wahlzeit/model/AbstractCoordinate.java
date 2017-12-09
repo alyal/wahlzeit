@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.exceptions.NegativeDistanceException;
+import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
 public abstract class AbstractCoordinate implements Coordinate {
@@ -27,7 +28,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor);
 		double distance = getCartesianDistance(cor);
 		assertDistance(distance);
 		return distance;
@@ -38,7 +39,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate cor) {
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor);
 
 		CartesianCoordinate asCartesian = this.asCartesianCoordinate();
 
@@ -50,7 +51,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getSphericDistance(Coordinate cor) {
-		assertNotNull(cor);
+		AssertionUtils.assertNotNull(cor);
 
 		SphericCoordinate asSphericCoordinate = this.asSphericCoordinate();
 
@@ -68,7 +69,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		assertNotNull(obj);
+		AssertionUtils.assertNotNull(obj);
 		assertInstanceOfCoordinate(obj);
 
 		return isEqual((Coordinate) obj);
@@ -87,15 +88,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public void assertInstanceOfCoordinate(Object o) {
 		if (!(o instanceof Coordinate)) {
 			throw new IllegalArgumentException("Passed argument is not an instance of Coordinate!");
-		}
-	}
-
-	/**
-	 * @methodtype assertion
-	 */
-	public void assertNotNull(Object o) {
-		if (o == null) {
-			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
 	}
 

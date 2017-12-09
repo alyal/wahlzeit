@@ -20,9 +20,10 @@
 
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.LogBuilder;
-
 import java.util.logging.Logger;
+
+import org.wahlzeit.exceptions.PhotoFactoryCreationException;
+import org.wahlzeit.services.LogBuilder;
 
 /**
  * An Abstract Factory for creating photos and related objects.
@@ -81,27 +82,31 @@ public class PhotoFactory {
 
 	/**
 	 * Creates a new photo with the specified id
+	 * 
+	 * @throws PhotoFactoryCreationException
 	 */
-	public Photo createPhoto(PhotoId id) {
+	public Photo createPhoto(PhotoId id) throws PhotoFactoryCreationException {
 		return new Photo(id);
 	}
 
 	/**
-	 * Loads a photo. The Java object is loaded from the Google Datastore, the Images in all sizes are loaded from the
-	 * Google Cloud storage.
+	 * Loads a photo. The Java object is loaded from the Google Datastore, the
+	 * Images in all sizes are loaded from the Google Cloud storage.
 	 */
 	public Photo loadPhoto(PhotoId id) {
-	   /* Photo result =
-                OfyService.ofy().load().type(Photo.class).ancestor(KeyFactory.createKey("Application", "Wahlzeit")).filter(Photo.ID, id).first().now();
-        for (PhotoSize size : PhotoSize.values()) {
-            GcsFilename gcsFilename = new GcsFilename("picturebucket", filename);
-
-
-
-        }*/
+		/*
+		 * Photo result =
+		 * OfyService.ofy().load().type(Photo.class).ancestor(KeyFactory.createKey(
+		 * "Application", "Wahlzeit")).filter(Photo.ID, id).first().now(); for
+		 * (PhotoSize size : PhotoSize.values()) { GcsFilename gcsFilename = new
+		 * GcsFilename("picturebucket", filename);
+		 * 
+		 * 
+		 * 
+		 * }
+		 */
 		return null;
 	}
-
 
 	/**
 	 *

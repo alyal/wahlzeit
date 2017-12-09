@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.AssertionUtils;
+
 import com.googlecode.objectify.annotation.Subclass;
 
 /**
@@ -17,9 +19,8 @@ public class BuildingPhoto extends Photo {
 	private static final long serialVersionUID = 1L;
 
 	private Building building;
+	private final String className = this.getClass().getSimpleName();
 
-	
-	
 	public BuildingPhoto() {
 		super();
 	}
@@ -28,8 +29,14 @@ public class BuildingPhoto extends Photo {
 		super(photoId);
 	}
 
-	public BuildingPhoto(Building building) {
+	/**
+	 * 
+	 * @param building
+	 * @throws IllegalArgumentException
+	 */
+	public BuildingPhoto(Building building) throws IllegalArgumentException {
 		super();
+		AssertionUtils.assertNotNull(building, this.getClass().getName());
 		this.building = building;
 	}
 
@@ -46,6 +53,7 @@ public class BuildingPhoto extends Photo {
 	 * @methodproperty primitive
 	 */
 	public void setBuilding(Building building) {
+		AssertionUtils.assertNotNull(building, className);
 		this.building = building;
 	}
 }

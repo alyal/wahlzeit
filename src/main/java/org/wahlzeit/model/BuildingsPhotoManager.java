@@ -2,6 +2,8 @@ package org.wahlzeit.model;
 
 import java.util.logging.Logger;
 
+import org.wahlzeit.utils.AssertionUtils;
+
 /**
  * BuildingsPhotoManager is a subclass of {@PhotoManager}.
  */
@@ -23,8 +25,8 @@ public class BuildingsPhotoManager extends PhotoManager {
 	 *
 	 */
 	@Override
-	public Photo getPhotoFromId(PhotoId id) {
-		assertInstanceOfPhotoId(id);
+	public Photo getPhotoFromId(PhotoId id) throws IllegalArgumentException {
+		AssertionUtils.assertInstanceOfPhotoId(id, this.getClass().getSimpleName());
 		if (id == null) {
 			return null;
 		}
@@ -39,18 +41,6 @@ public class BuildingsPhotoManager extends PhotoManager {
 		}
 
 		return result;
-	}
-
-	/**
-	 * @throws IllegalArgumentException
-	 * @mthodtype: assertion
-	 */
-	private void assertInstanceOfPhotoId(Object o) throws IllegalArgumentException {
-		if (!(o instanceof PhotoId)) {
-			log.warning("Passed argument is not an instance of PhotoId, but was: " + o.getClass().getName());
-			throw new IllegalArgumentException("Passed argument is not an instance of PhotoId, but was!");
-		}
-
 	}
 
 }

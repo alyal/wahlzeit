@@ -26,6 +26,7 @@ import org.wahlzeit.services.DataObject;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.services.ObjectManager;
+import org.wahlzeit.utils.AssertionUtils;
 
 import com.google.api.client.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
@@ -148,7 +149,9 @@ public class Photo extends DataObject {
 	/**
 	 * @methodtype constructor
 	 */
-	public Photo(PhotoId myId) {
+	public Photo(PhotoId myId) throws IllegalArgumentException {
+		AssertionUtils.assertNotNull(myId, this.getClass().getSimpleName());
+		AssertionUtils.assertInstanceOfPhotoId(myId, this.getClass().getSimpleName());
 		id = myId;
 
 		incWriteCount();
