@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.ParamsUtil;
 
 public class CartesianCoordinate extends AbstractCoordinate {
@@ -21,7 +22,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	public CartesianCoordinate(double x, double y, double z) {
 		assertClassInvariants();
 
-		// TODO: add preconditions for valid Coordinate input arguments
+		assertDouble(x);
+		assertDouble(y);
+		assertDouble(z);
 
 		this.x = x;
 		this.y = y;
@@ -59,7 +62,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setXCoordinate(double x) {
-		// TODO: add preconditions for valid input arguments
+		assertDouble(x);
 		this.x = x;
 		assertCorrectXValueSet(x);
 		assertClassInvariants();
@@ -69,7 +72,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setYCoordinate(double y) {
-		// TODO: add preconditions for valid input arguments
+		assertDouble(y);
 		this.y = y;
 		assertCorrectYValueSet(y);
 		assertClassInvariants();
@@ -79,7 +82,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setZCoordinate(double z) {
-		// TODO: add preconditions for valid input arguments
+		assertDouble(z);
 		this.z = z;
 		assertCorrectZValueSet(z);
 		assertClassInvariants();
@@ -95,6 +98,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	@Override
 	public double calculateDistance(Coordinate cor) {
+		assertClassInvariants();
 		assertNotNull(cor);
 
 		CartesianCoordinate cartesianCor = cor.asCartesianCoordinate();
@@ -104,6 +108,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 
 		assertDistance(distance);
+		assertClassInvariants();
 		return distance;
 	}
 
@@ -215,8 +220,19 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		// for now in my opinion there are no real invariants.
+		assertDouble(this.getXCoordinate());
+		assertDouble(this.getXCoordinate());
+		assertDouble(this.getZCoordinate());
+	}
 
+	/**
+	 * @methodtype assertion
+	 */
+	public void assertSphericRepresenatation(Coordinate isSpheric) {
+		assertNotNull(isSpheric);
+		if (!(isSpheric instanceof SphericCoordinate)) {
+			throw new WrongCoordinateTypeException(isSpheric);
+		}
 	}
 
 	/**

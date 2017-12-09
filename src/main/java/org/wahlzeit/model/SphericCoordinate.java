@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.exceptions.SettingErrorException;
+import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.ParamsUtil;
 
 public class SphericCoordinate extends AbstractCoordinate {
@@ -111,14 +113,17 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodproperty composed
 	 */
 	private CartesianCoordinate computeCartesian() {
-		final double sinPhi = Math.sin(Math.toRadians(this.latitude));
-		final double sinTheta = Math.sin(Math.toRadians(this.longitude));
-		final double cosPhi = Math.cos(Math.toRadians(this.latitude));
-		final double cosTheta = Math.cos(Math.toRadians(this.longitude));
+		assertClassInvariants();
+		final double sinPhi = Math.sin(Math.toRadians(this.getLatitude()));
+		final double sinTheta = Math.sin(Math.toRadians(this.getLongitude()));
+		final double cosPhi = Math.cos(Math.toRadians(this.getLatitude()));
+		final double cosTheta = Math.cos(Math.toRadians(this.getLongitude()));
 
-		double x = calculateX(radius, sinTheta, cosPhi);
-		double y = calculateY(radius, sinTheta, sinPhi);
-		double z = calculateZ(radius, cosTheta);
+		double x = calculateX(this.getRadius(), sinTheta, cosPhi);
+		double y = calculateY(this.getRadius(), sinTheta, sinPhi);
+		double z = calculateZ(this.getRadius(), cosTheta);
+
+		assertClassInvariants();
 
 		return new CartesianCoordinate(x, y, z);
 	}
@@ -155,6 +160,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double calculateDistance(Coordinate cor) {
+		assertClassInvariants();
 		assertNotNull(cor);
 
 		SphericCoordinate sphericCor = cor.asSphericCoordinate();
@@ -172,6 +178,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double distance = ParamsUtil.EARTH_RADIUS * c;
 
 		assertDistance(distance);
+		assertClassInvariants();
 
 		return distance;
 	}
@@ -209,11 +216,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertNotNull(coordinate);
 		SphericCoordinate asSpheric = coordinate.asSphericCoordinate();
 
-		if (Math.abs(this.latitude - asSpheric.getLatitude()) <= ParamsUtil.DELTA) {
+		if (Math.abs(this.getLatitude() - asSpheric.getLatitude()) <= ParamsUtil.DELTA) {
 
-			if (Math.abs(this.longitude - asSpheric.getLongitude()) <= ParamsUtil.DELTA) {
+			if (Math.abs(this.getLongitude() - asSpheric.getLongitude()) <= ParamsUtil.DELTA) {
 
-				if (Math.abs(this.radius - asSpheric.getRadius()) <= ParamsUtil.DELTA) {
+				if (Math.abs(this.getRadius() - asSpheric.getRadius()) <= ParamsUtil.DELTA) {
 					return true;
 				}
 			}
@@ -226,28 +233,45 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		// for now in my opinion there are no real invariants.
+		assertRadius(this.getRadius());
+		assertLatitude(this.getLatitude());
+		assertLongitude(this.getLongitude());
+	}
 
+	/**
+	 * @methodtype assertion
+	 */
+	public void assertCartesianRepresenatation(Coordinate isCartesian) throws WrongCoordinateTypeException {
+		assertNotNull(isCartesian);
+		if (!(isCartesian instanceof CartesianCoordinate)) {
+			throw new WrongCoordinateTypeException(isCartesian);
+		}
 	}
 
 	/**
 	 * @methodtype: assertion
 	 */
 	private void assertCorrectLongitudeSet(double setValue) {
-		assert this.getLongitude() == setValue;
+		if (this.getLongitude() != setValue) {
+			throw new SettingErrorException(setValue, this.getLongitude());
+		}
 	}
 
 	/**
 	 * @methodtype: assertion
 	 */
 	private void assertCorrectLatitudeSet(double setValue) {
-		assert this.getLatitude() == setValue;
+		if (this.getLatitude() != setValue) {
+			throw new SettingErrorException(setValue, this.getLatitude());
+		}
 	}
 
 	/**
 	 * @methodtype: assertion
 	 */
 	private void assertCorrectRadiusSet(double setValue) {
-		assert this.getRadius() == setValue;
+		if (this.getRadius() != setValue) {
+			throw new SettingErrorException(setValue, this.getRadius());
+		}
 	}
 }

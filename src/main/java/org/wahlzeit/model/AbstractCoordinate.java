@@ -1,7 +1,6 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.exceptions.NegativeDistanceException;
-import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.ParamsUtil;
 
 public abstract class AbstractCoordinate implements Coordinate {
@@ -29,7 +28,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getDistance(Coordinate cor) {
 		assertNotNull(cor);
-		return getCartesianDistance(cor);
+		double distance = getCartesianDistance(cor);
+		assertDistance(distance);
+		return distance;
 	};
 
 	/**
@@ -40,8 +41,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 		assertNotNull(cor);
 
 		CartesianCoordinate asCartesian = this.asCartesianCoordinate();
-
-		assertCartesianRepresenatation(asCartesian);
 
 		return asCartesian.calculateDistance(cor);
 	}
@@ -54,8 +53,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 		assertNotNull(cor);
 
 		SphericCoordinate asSphericCoordinate = this.asSphericCoordinate();
-
-		assertSphericRepresenatation(asSphericCoordinate);
 
 		return asSphericCoordinate.calculateDistance(cor);
 	};
@@ -106,6 +103,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype assertion
 	 */
 	public void assertRadius(double radius) {
+		assertDouble(radius);
 		if (radius < 0) {
 			throw new IllegalArgumentException("Values smaller 0 for radius are not allowed!");
 		}
@@ -115,6 +113,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype assertion
 	 */
 	public void assertLatitude(double latitude) {
+		assertDouble(latitude);
 		if (latitude < ParamsUtil.MIN_LATITUDE || latitude > ParamsUtil.MAX_LATITUDE) {
 			throw new IllegalArgumentException("Value of latitude must be between -90.00 and 90.00");
 		}
@@ -125,28 +124,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @methodtype assertion
 	 */
 	public void assertLongitude(double longitude) {
+		assertDouble(longitude);
 		if (longitude < ParamsUtil.MIN_LONGITUDE || longitude > ParamsUtil.MAX_LONGITUDE) {
 			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
-		}
-	}
-
-	/**
-	 * @methodtype assertion
-	 */
-	public void assertSphericRepresenatation(Coordinate isSpheric) {
-		assertNotNull(isSpheric);
-		if (!(isSpheric instanceof SphericCoordinate)) {
-			throw new WrongCoordinateTypeException(isSpheric);
-		}
-	}
-
-	/**
-	 * @methodtype assertion
-	 */
-	public void assertCartesianRepresenatation(Coordinate isCartesian) throws WrongCoordinateTypeException {
-		assertNotNull(isCartesian);
-		if (!(isCartesian instanceof CartesianCoordinate)) {
-			throw new WrongCoordinateTypeException(isCartesian);
 		}
 	}
 
@@ -157,6 +137,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public void assertDistance(double distance) throws NegativeDistanceException {
 		if (distance <= 0) {
 			throw new NegativeDistanceException(distance);
+		}
+	}
+
+	/**
+	 * @throws IllegalArgumetnexception
+	 * @methodtype assertion
+	 */
+	public void assertDouble(double value) throws IllegalArgumentException {
+		if (Double.isNaN(value) || value == Double.POSITIVE_INFINITY) {
+			throw new IllegalArgumentException();
 		}
 	}
 
