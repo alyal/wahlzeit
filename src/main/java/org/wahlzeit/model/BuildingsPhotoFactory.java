@@ -72,7 +72,9 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 		try {
 			photo = new BuildingPhoto(id);
 		} catch (IllegalArgumentException e) {
+			photo = new BuildingPhoto();
 			throw new PhotoFactoryCreationException(id, e.getMessage());
+
 		}
 		return photo;
 	}
@@ -86,6 +88,7 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 		try {
 			photo = new BuildingPhoto(building);
 		} catch (IllegalArgumentException e) {
+			photo = new BuildingPhoto(new Building());
 			throw new PhotoFactoryCreationException(building, e.getMessage());
 		}
 		return photo;
