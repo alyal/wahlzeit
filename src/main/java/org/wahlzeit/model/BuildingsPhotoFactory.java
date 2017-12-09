@@ -2,6 +2,7 @@ package org.wahlzeit.model;
 
 import java.util.logging.Logger;
 
+import org.wahlzeit.exceptions.PhotoFactoryCreationException;
 import org.wahlzeit.services.LogBuilder;
 
 public class BuildingsPhotoFactory extends PhotoFactory {
@@ -17,7 +18,7 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	 *
 	 */
 	protected BuildingsPhotoFactory() {
-		
+
 	}
 
 	/**
@@ -29,6 +30,7 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 
 	/**
 	 * Public singleton access method.
+	 * 
 	 * @methodtype get
 	 */
 	public static synchronized BuildingsPhotoFactory getInstance() {
@@ -57,24 +59,42 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	 * @methodtype factory
 	 */
 	@Override
-	public Photo createPhoto() {
-		return new BuildingPhoto();
+	public Photo createPhoto() throws PhotoFactoryCreationException {
+		Photo photo;
+		try {
+			photo = new BuildingPhoto();
+		} catch (Exception e) {
+			throw new PhotoFactoryCreationException(e.getMessage());
+		}
+		return photo;
 	}
 
 	/**
 	 * @methodtype factory
 	 */
 	@Override
-	public Photo createPhoto(PhotoId id) {
-		return new BuildingPhoto(id);
+	public Photo createPhoto(PhotoId id) throws PhotoFactoryCreationException {
+		Photo photo;
+		try {
+			photo = new BuildingPhoto(id);
+		} catch (IllegalArgumentException e) {
+			throw new PhotoFactoryCreationException(id, e.getMessage());
+		}
+		return photo;
 	}
-	
+
 	/**
 	 * @methodtype factory
 	 */
-	
-	public BuildingPhoto createBuildingsPhoto(Building building) {
-		return new BuildingPhoto(building);
+
+	public BuildingPhoto createBuildingsPhoto(Building building) throws PhotoFactoryCreationException {
+		BuildingPhoto photo;
+		try {
+			photo = new BuildingPhoto(building);
+		} catch (IllegalArgumentException e) {
+			throw new PhotoFactoryCreationException(building, e.getMessage());
+		}
+		return photo;
 	}
 
 }

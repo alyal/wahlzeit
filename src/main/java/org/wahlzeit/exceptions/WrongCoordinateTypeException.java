@@ -18,7 +18,7 @@ public class WrongCoordinateTypeException extends IllegalStateException {
 	}
 
 	public WrongCoordinateTypeException(Coordinate is) {
-		log.warning("The Representation of coordinate was wrong. It was: " + is);
+		log.warning("The Representation of coordinate is wrong. It was: " + is.getClass().getName());
 	}
 
 }

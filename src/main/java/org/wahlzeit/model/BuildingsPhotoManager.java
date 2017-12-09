@@ -7,6 +7,8 @@ import java.util.logging.Logger;
  */
 public class BuildingsPhotoManager extends PhotoManager {
 
+	private static final Logger log = Logger.getLogger(BuildingsPhotoManager.class.getName());
+
 	/**
 	 *
 	 */
@@ -17,10 +19,12 @@ public class BuildingsPhotoManager extends PhotoManager {
 	}
 
 	/**
+	 * @throws IllegalArgumentException
 	 *
 	 */
 	@Override
 	public Photo getPhotoFromId(PhotoId id) {
+		assertInstanceOfPhotoId(id);
 		if (id == null) {
 			return null;
 		}
@@ -35,6 +39,18 @@ public class BuildingsPhotoManager extends PhotoManager {
 		}
 
 		return result;
+	}
+
+	/**
+	 * @throws IllegalArgumentException
+	 * @mthodtype: assertion
+	 */
+	private void assertInstanceOfPhotoId(Object o) throws IllegalArgumentException {
+		if (!(o instanceof PhotoId)) {
+			log.warning("Passed argument is not an instance of PhotoId, but was: " + o.getClass().getName());
+			throw new IllegalArgumentException("Passed argument is not an instance of PhotoId, but was!");
+		}
+
 	}
 
 }
