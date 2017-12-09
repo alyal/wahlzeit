@@ -59,6 +59,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setXCoordinate(double x) {
+		// TODO: add preconditions for valid input arguments
 		this.x = x;
 		assertCorrectXValueSet(x);
 		assertClassInvariants();
@@ -68,6 +69,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setYCoordinate(double y) {
+		// TODO: add preconditions for valid input arguments
 		this.y = y;
 		assertCorrectYValueSet(y);
 		assertClassInvariants();
@@ -77,6 +79,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public void setZCoordinate(double z) {
+		// TODO: add preconditions for valid input arguments
 		this.z = z;
 		assertCorrectZValueSet(z);
 		assertClassInvariants();
@@ -212,11 +215,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		// for now in my opinion there are no real invariants. Anyway for now I do some
-		// null checks on the class fields
-		assertNotNull(this.getXCoordinate());
-		assertNotNull(this.getYCoordinate());
-		assertNotNull(this.getZCoordinate());
+		// for now in my opinion there are no real invariants.
+
 	}
 
 	/**

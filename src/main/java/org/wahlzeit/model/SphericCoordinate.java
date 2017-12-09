@@ -64,7 +64,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertRadius(r);
 
 		this.radius = r;
-		
+
 		assertCorrectRadiusSet(r);
 		assertClassInvariants();
 
@@ -77,7 +77,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertLongitude(longitude);
 
 		this.longitude = longitude;
-		
+
 		assertCorrectLongitudeSet(longitude);
 		assertClassInvariants();
 	}
@@ -89,7 +89,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertLatitude(latitude);
 
 		this.latitude = latitude;
-		
+
 		assertCorrectLatitudeSet(latitude);
 		assertClassInvariants();
 	}
@@ -147,7 +147,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
 		return this;
-	}	
+	}
 
 	/**
 	 * returns the distance between this spherical Coordinate and another Coordinate
@@ -226,25 +226,24 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		// for now in my opinion there are no real invariants. Anyway for now I do some
-		// null checks on the class fields
-		assertNotNull(this.getLatitude());
-		assertNotNull(this.getLongitude());
-		assertNotNull(this.getRadius());
+		// for now in my opinion there are no real invariants.
+
 	}
-	
+
 	/**
 	 * @methodtype: assertion
 	 */
 	private void assertCorrectLongitudeSet(double setValue) {
 		assert this.getLongitude() == setValue;
 	}
+
 	/**
 	 * @methodtype: assertion
 	 */
 	private void assertCorrectLatitudeSet(double setValue) {
 		assert this.getLatitude() == setValue;
 	}
+
 	/**
 	 * @methodtype: assertion
 	 */

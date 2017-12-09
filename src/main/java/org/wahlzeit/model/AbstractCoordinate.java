@@ -1,8 +1,8 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.exceptions.NegativeDistanceException;
+import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.ParamsUtil;
-
-import com.google.appengine.api.taskqueue.InternalFailureException;
 
 public abstract class AbstractCoordinate implements Coordinate {
 
@@ -129,41 +129,34 @@ public abstract class AbstractCoordinate implements Coordinate {
 			throw new IllegalArgumentException("Value of longitude must be between -180.00 and 180.00");
 		}
 	}
+
 	/**
 	 * @methodtype assertion
 	 */
 	public void assertSphericRepresenatation(Coordinate isSpheric) {
 		assertNotNull(isSpheric);
 		if (!(isSpheric instanceof SphericCoordinate)) {
-			// TODO
-			// Not sure if this is a good exception for that, will maybe define own
-			// Exception after next lecture about exception handling
-			throw new InternalFailureException("the result is of wrong type!");
+			throw new WrongCoordinateTypeException(isSpheric);
 		}
 	}
 
 	/**
 	 * @methodtype assertion
 	 */
-	public void assertCartesianRepresenatation(Coordinate isCartesian) {
+	public void assertCartesianRepresenatation(Coordinate isCartesian) throws WrongCoordinateTypeException {
 		assertNotNull(isCartesian);
 		if (!(isCartesian instanceof CartesianCoordinate)) {
-			// TODO
-			// Not sure if this is a good exception for that, will maybe define own
-			// Exception after next lecture about exception handling
-			throw new InternalFailureException("the result is of wrong type!");
+			throw new WrongCoordinateTypeException(isCartesian);
 		}
 	}
 
 	/**
+	 * @throws NegativeDistanceException
 	 * @methodtype assertion
 	 */
-	public void assertDistance(double distance) {
+	public void assertDistance(double distance) throws NegativeDistanceException {
 		if (distance <= 0) {
-			// TODO
-			// Not sure if this is a good exception for that, will maybe define own
-			// Exception after next lecture about exception handling
-			throw new InternalFailureException("A distance smaller than 0 is not possible!");
+			throw new NegativeDistanceException(distance);
 		}
 	}
 
