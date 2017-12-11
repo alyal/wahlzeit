@@ -23,7 +23,7 @@ public class PhotoFactoryCreationException extends Exception {
 		if (is != null) {
 			log.warning("An error while creating a Photo with " + is.getClass().getName() + " occured: " + message);
 		} else {
-			log.warning("The passed argument was null");
+			log.warning("The passed argument was null!" + message);
 		}
 	}
 }

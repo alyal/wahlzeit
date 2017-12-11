@@ -14,7 +14,7 @@ public class WrongCoordinateTypeException extends IllegalStateException {
 	private static final Logger log = Logger.getLogger(WrongCoordinateTypeException.class.getName());
 
 	public WrongCoordinateTypeException() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public WrongCoordinateTypeException(Coordinate is) {
