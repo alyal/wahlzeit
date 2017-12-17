@@ -15,7 +15,7 @@ public class SphericCoordinateTest {
 
 	@Before
 	public void setUp() {
-		spericCoordinateA = new SphericCoordinate();
+		spericCoordinateA = new SphericCoordinate(EARTH_RADIUS, 0.0, 0.0);
 		spericCoordinateB = new SphericCoordinate(5.56, 60.5, 35.4);
 	}
 
@@ -43,31 +43,7 @@ public class SphericCoordinateTest {
 	}
 
 	@Test
-	public void spehericCoordinateSettersTest() {
-		spericCoordinateB.setLatitude(23.56);
-		spericCoordinateB.setLongitude(44.87);
-		spericCoordinateB.setRadius(15.69);
-
-		assertEquals(spericCoordinateB.getLatitude(), 23.56, 0.0);
-		assertEquals(spericCoordinateB.getLongitude(), 44.87, 0.0);
-		assertEquals(spericCoordinateB.getRadius(), 15.69, 0.0);
-	}
-
-	@Test
-	public void equalsTest() {
-		spericCoordinateA.setRadius(5.56);
-		spericCoordinateA.setLatitude(60.5);
-		spericCoordinateA.setLongitude(35.4);
-		assertEquals(spericCoordinateA.equals(spericCoordinateB), true);
-	}
-
-	@Test
 	public void asSphericCoordinateTest() {
-		assertEquals(spericCoordinateA, spericCoordinateA.asSphericCoordinate());
-	}
-
-	@Test
-	public void asSphericCoordinateTest2() {
 		assertEquals(spericCoordinateB, spericCoordinateB.asSphericCoordinate());
 	}
 
@@ -95,17 +71,18 @@ public class SphericCoordinateTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedRadiusTest() {
-		spericCoordinateA.setRadius(-10);
+		new SphericCoordinate(-10, 123.00, 85.00);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void setNotAllowedLatitudeTest() {
-		spericCoordinateA.setLatitude(123);
+	public void notAllowedLatitudeTest() {
+		new SphericCoordinate(EARTH_RADIUS, 123.00, 85.00);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedLongitudeTest() {
-		spericCoordinateA.setLongitude(234);
+		new SphericCoordinate(EARTH_RADIUS, 123.00, 234.00);
+	
 	}
 
 }

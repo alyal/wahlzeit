@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2017 by alyal, https://github.com/alyal
+ *
+ * This file is part of the Wahlzeit photo rating application.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
 package org.wahlzeit.model;
 
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
@@ -6,22 +25,14 @@ import org.wahlzeit.utils.ParamsUtil;
 
 public class CartesianCoordinate extends AbstractCoordinate {
 
-	private double x = 1.0;
-	private double y = 1.0;
-	private double z = 1.0;
-
-	/**
-	 * @methodtype constructor
-	 */
-	public CartesianCoordinate() {
-
-	}
+	private final double x;
+	private final double y;
+	private final double z;
 
 	/**
 	 * @methodtype constructor
 	 */
 	public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
-		assertClassInvariants();
 
 		assertDouble(x);
 		assertDouble(y);
@@ -40,53 +51,60 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public double getXCoordinate() {
-		return x;
+		assertClassInvariants();
+		double xCopy = this.x;
+		assertClassInvariants();
+		return xCopy;
 	}
 
 	/**
 	 * 
 	 */
 	public double getYCoordinate() {
-		return y;
+		assertClassInvariants();
+		double yCopy = this.y;
+		assertClassInvariants();
+		return yCopy;
 	}
 
 	/**
 	 * 
 	 */
 	public double getZCoordinate() {
-		return z;
-	}
-
-	// SETTERS:
-
-	/**
-	 * 
-	 */
-	public void setXCoordinate(double x) {
-		assertDouble(x);
-		this.x = x;
-		assertCorrectXValueSet(x);
 		assertClassInvariants();
+		double zCopy = this.z;
+		assertClassInvariants();
+		return zCopy;
 	}
 
 	/**
 	 * 
 	 */
-	public void setYCoordinate(double y) {
-		assertDouble(y);
-		this.y = y;
-		assertCorrectYValueSet(y);
-		assertClassInvariants();
+	private void setXCoordinate(double x) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
 	}
 
 	/**
 	 * 
 	 */
-	public void setZCoordinate(double z) {
-		assertDouble(z);
-		this.z = z;
-		assertCorrectZValueSet(z);
-		assertClassInvariants();
+	private void setYCoordinate(double y) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
+	}
+
+	/**
+	 * 
+	 */
+	private void setZCoordinate(double z) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
 	}
 
 	/**
@@ -94,7 +112,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		return this;
+		return new CartesianCoordinate(this.getXCoordinate(), this.getYCoordinate(), this.getZCoordinate());
 	}
 
 	@Override
@@ -221,9 +239,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		assertDouble(this.getXCoordinate());
-		assertDouble(this.getXCoordinate());
-		assertDouble(this.getZCoordinate());
+		assertDouble(this.x);
+		assertDouble(this.y);
+		assertDouble(this.z);
 	}
 
 	/**

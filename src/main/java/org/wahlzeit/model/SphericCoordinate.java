@@ -1,28 +1,38 @@
+/*
+ * Copyright (c) 2017 by alyal, https://github.com/alyal
+ *
+ * This file is part of the Wahlzeit photo rating application.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
 package org.wahlzeit.model;
 
-import org.wahlzeit.exceptions.SettingErrorException;
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
-	private double latitude = 0.0;
-	private double longitude = 0.0;
-	private double radius = ParamsUtil.EARTH_RADIUS;
-
-	/**
-	 * @methodtype constructor
-	 */
-	public SphericCoordinate() {
-
-	}
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 
 	/**
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double latitude, double longitude) {
-		assertClassInvariants();
 
 		assertRadius(radius);
 		assertLatitude(latitude);
@@ -41,60 +51,62 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getRadius() {
-		return radius;
+		assertClassInvariants();
+		double radiusCopy = this.radius;
+		assertClassInvariants();
+		return radiusCopy;
 	}
 
 	/**
 	 * @methodtype get
 	 */
 	public double getLongitude() {
-		return longitude;
+		assertClassInvariants();
+		double longitudeCopy = this.longitude;
+		assertClassInvariants();
+		return longitudeCopy;
 	}
 
 	/**
 	 * @methodtype get
 	 */
 	public double getLatitude() {
-		return latitude;
+		assertClassInvariants();
+		double latitudeCopy = this.latitude;
+		assertClassInvariants();
+		return latitudeCopy;
 	}
 
-	// SETTER:
+	// SETTERS:
 
 	/**
-	 * @methodtype set
+	 * 
 	 */
-	public void setRadius(double r) {
-		assertRadius(r);
-
-		this.radius = r;
-
-		assertCorrectRadiusSet(r);
-		assertClassInvariants();
-
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setLongitude(double longitude) {
-		assertLongitude(longitude);
-
-		this.longitude = longitude;
-
-		assertCorrectLongitudeSet(longitude);
-		assertClassInvariants();
+	private void setXCoordinate(double x) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
 	}
 
 	/**
-	 * @methodtype set
+	 * 
 	 */
-	public void setLatitude(double latitude) {
-		assertLatitude(latitude);
+	private void setYCoordinate(double y) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
+	}
 
-		this.latitude = latitude;
-
-		assertCorrectLatitudeSet(latitude);
-		assertClassInvariants();
+	/**
+	 * 
+	 */
+	private void setZCoordinate(double z) {
+		// do nothing because Object should be immutable, so nothing should be changed
+		// (see lecture C07 p.10: "no mutation methods of return type void").
+		// For now I keep it as private method in case they are needed again later for
+		// other homework. If not it can be removed.
 	}
 
 	/**
@@ -152,7 +164,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		return this;
+		return new SphericCoordinate(this.getRadius(), this.getLatitude(), this.getLongitude());
 	}
 
 	/**
@@ -234,9 +246,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype: assertion
 	 */
 	private void assertClassInvariants() {
-		assertRadius(this.getRadius());
-		assertLatitude(this.getLatitude());
-		assertLongitude(this.getLongitude());
+		assertRadius(this.radius);
+		assertLatitude(this.latitude);
+		assertLongitude(this.longitude);
 	}
 
 	/**
@@ -249,30 +261,4 @@ public class SphericCoordinate extends AbstractCoordinate {
 		}
 	}
 
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectLongitudeSet(double setValue) {
-		if (this.getLongitude() != setValue) {
-			throw new SettingErrorException(setValue, this.getLongitude());
-		}
-	}
-
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectLatitudeSet(double setValue) {
-		if (this.getLatitude() != setValue) {
-			throw new SettingErrorException(setValue, this.getLatitude());
-		}
-	}
-
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectRadiusSet(double setValue) {
-		if (this.getRadius() != setValue) {
-			throw new SettingErrorException(setValue, this.getRadius());
-		}
-	}
 }
