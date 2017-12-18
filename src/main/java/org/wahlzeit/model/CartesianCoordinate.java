@@ -112,7 +112,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		return new CartesianCoordinate(this.getXCoordinate(), this.getYCoordinate(), this.getZCoordinate());
+		CartesianCoordinate copyOfCartesian = new CartesianCoordinate(this.getXCoordinate(), this.getYCoordinate(),
+				this.getZCoordinate());
+		return copyOfCartesian;
 	}
 
 	@Override

@@ -164,7 +164,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		return new SphericCoordinate(this.getRadius(), this.getLatitude(), this.getLongitude());
+		SphericCoordinate copyOfSpheric = new SphericCoordinate(this.getRadius(), this.getLatitude(),
+				this.getLongitude());
+		return copyOfSpheric;
 	}
 
 	/**
