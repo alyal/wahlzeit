@@ -145,17 +145,17 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @throws NegativeDistanceException
 	 * @methodtype assertion
 	 */
-	public void assertDistance(double distance) throws NegativeDistanceException {
+	public void assertDistance(double distance) {
 		if (distance <= 0) {
 			throw new NegativeDistanceException(distance);
 		}
 	}
 
 	/**
-	 * @throws IllegalArgumetnexception
+	 * @throws IllegalArgumentException
 	 * @methodtype assertion
 	 */
-	public void assertDouble(double value) throws IllegalArgumentException {
+	public void assertDouble(double value) {
 		if (Double.isNaN(value) || value == Double.POSITIVE_INFINITY) {
 			throw new IllegalArgumentException();
 		}

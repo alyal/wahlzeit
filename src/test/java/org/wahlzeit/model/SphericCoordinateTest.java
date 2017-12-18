@@ -5,13 +5,14 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.utils.ParamsUtil;
 
 public class SphericCoordinateTest {
 
 	private SphericCoordinate spericCoordinateA;
 	private SphericCoordinate spericCoordinateB;
-	private double DELTA = 0.000001;
-	private final double EARTH_RADIUS = 6378.00;
+	private double DELTA = ParamsUtil.DELTA;
+	private final double EARTH_RADIUS = ParamsUtil.EARTH_RADIUS;
 
 	@Before
 	public void setUp() {
@@ -82,7 +83,7 @@ public class SphericCoordinateTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedLongitudeTest() {
 		new SphericCoordinate(EARTH_RADIUS, 123.00, 234.00);
-	
+
 	}
 
 }
