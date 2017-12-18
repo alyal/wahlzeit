@@ -82,31 +82,31 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * 
 	 */
-	private void setXCoordinate(double x) {
+	private void setRadius(double x) {
 		// do nothing because Object should be immutable, so nothing should be changed
 		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// For now I keep it as private method in case they are needed again later for
-		// other homework. If not it can be removed.
+		// As I didn’t know how to use setters appropriate within a value object class I
+		// made them private and they do nothing for now.
 	}
 
 	/**
 	 * 
 	 */
-	private void setYCoordinate(double y) {
+	private void setLongitude(double y) {
 		// do nothing because Object should be immutable, so nothing should be changed
 		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// For now I keep it as private method in case they are needed again later for
-		// other homework. If not it can be removed.
+		// As I didn’t know how to use setters appropriate within a value object class I
+		// made them private and they do nothing for now.
 	}
 
 	/**
 	 * 
 	 */
-	private void setZCoordinate(double z) {
+	private void setLatitude(double z) {
 		// do nothing because Object should be immutable, so nothing should be changed
 		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// For now I keep it as private method in case they are needed again later for
-		// other homework. If not it can be removed.
+		// As I didn’t know how to use setters appropriate within a value object class I
+		// made them private and they do nothing for now.
 	}
 
 	/**
