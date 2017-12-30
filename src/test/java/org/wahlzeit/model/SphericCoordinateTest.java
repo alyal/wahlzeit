@@ -16,8 +16,8 @@ public class SphericCoordinateTest {
 
 	@Before
 	public void setUp() {
-		spericCoordinateA = new SphericCoordinate(EARTH_RADIUS, 0.0, 0.0);
-		spericCoordinateB = new SphericCoordinate(5.56, 60.5, 35.4);
+		spericCoordinateA = SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 0.0, 0.0);
+		spericCoordinateB = SphericCoordinate.createSphericCoordinate(5.56, 60.5, 35.4);
 	}
 
 	@Test
@@ -58,31 +58,31 @@ public class SphericCoordinateTest {
 
 	@Test
 	public void getSphericDistanceTest() {
-		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
-		SphericCoordinate coordinate2 = new SphericCoordinate(EARTH_RADIUS, 89.5, 12.4);
+		SphericCoordinate coordinate1 = SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
+		SphericCoordinate coordinate2 = SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 89.5, 12.4);
 		assertEquals(coordinate1.getSphericDistance(coordinate2), 7364.0555, 0.01);
 	}
 
 	@Test
 	public void getSphericDistanceWithOneCartesianTest() {
-		SphericCoordinate coordinate1 = new SphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
-		CartesianCoordinate coordinate2 = new CartesianCoordinate(4.942, 1.087, -3.883);
+		SphericCoordinate coordinate1 = SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 23.7, 85.3);
+		CartesianCoordinate coordinate2 = CartesianCoordinate.createCartesianCoordinate(4.942, 1.087, -3.883);
 		assertEquals(coordinate1.getSphericDistance(coordinate2), 9303.184, 0.01);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedRadiusTest() {
-		new SphericCoordinate(-10, 123.00, 85.00);
+		SphericCoordinate.createSphericCoordinate(-10, 123.00, 85.00);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void notAllowedLatitudeTest() {
-		new SphericCoordinate(EARTH_RADIUS, 123.00, 85.00);
+		SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 123.00, 85.00);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setNotAllowedLongitudeTest() {
-		new SphericCoordinate(EARTH_RADIUS, 123.00, 234.00);
+		SphericCoordinate.createSphericCoordinate(EARTH_RADIUS, 123.00, 234.00);
 
 	}
 

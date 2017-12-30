@@ -32,7 +32,7 @@ public class LocationTest {
 	
 	@Before
 	public void setUp() {
-		coordinates = new CartesianCoordinate(1.0, 1.0, 1.0);
+		coordinates = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
 	}
 
 	@Test

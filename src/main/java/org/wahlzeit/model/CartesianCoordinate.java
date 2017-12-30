@@ -19,6 +19,9 @@
  */
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
@@ -29,10 +32,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private final double y;
 	private final double z;
 
+	private static final Map<String, CartesianCoordinate> sharedCartesianCoordinatesMap = new HashMap<String, CartesianCoordinate>();
+
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
+	private CartesianCoordinate(double x, double y, double z) {
 
 		assertDouble(x);
 		assertDouble(y);
@@ -43,6 +48,18 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.z = z;
 
 		assertClassInvariants();
+	}
+
+	public static final CartesianCoordinate createCartesianCoordinate(double x, double y, double z) {
+		String sharedKey = toString(x, y, z);
+		boolean coordinateAlreadyExists = checkExistence(sharedKey);
+
+		if (coordinateAlreadyExists) {
+			return sharedCartesianCoordinatesMap.get(sharedKey);
+		}
+		CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
+		sharedCartesianCoordinatesMap.put(sharedKey, cartesianCoordinate);
+		return cartesianCoordinate;
 	}
 
 	// Getters
@@ -80,41 +97,49 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 * 
 	 */
-	private void setXCoordinate(double x) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public CartesianCoordinate createCoordinateWithX(double x) {
+		assertClassInvariants();
+		assertDouble(x);
+	
+		CartesianCoordinate coordinateWithX = CartesianCoordinate.createCartesianCoordinate(x, this.y, this.z);
+	
+		assertClassInvariants();
+		return coordinateWithX;
 	}
 
 	/**
 	 * 
 	 */
-	private void setYCoordinate(double y) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public CartesianCoordinate createCoordinateWithY(double y) {
+		assertClassInvariants();
+		assertDouble(y);
+	
+		CartesianCoordinate coordinateWithY = CartesianCoordinate.createCartesianCoordinate(this.x, y, this.z);
+	
+		assertClassInvariants();
+		return coordinateWithY;
 	}
 
 	/**
 	 * 
 	 */
-	private void setZCoordinate(double z) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public CartesianCoordinate createCoordinateWithZ(double z) {
+		assertClassInvariants();
+		assertDouble(z);
+	
+		CartesianCoordinate coordinateWithZ = CartesianCoordinate.createCartesianCoordinate(this.x, this.y, z);
+	
+		assertClassInvariants();
+		return coordinateWithZ;
 	}
 
 	/**
-	 * 
+	 * returns this Object, as we already have a cartesian coordinate
+	 * representation
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		CartesianCoordinate copyOfCartesian = new CartesianCoordinate(this.getXCoordinate(), this.getYCoordinate(),
-				this.getZCoordinate());
-		return copyOfCartesian;
+		return this;
 	}
 
 	@Override
@@ -158,9 +183,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 			// longitude
 			double theta = calculateTheta(radius);
 
-			return new SphericCoordinate(radius, phi, theta);
+			return SphericCoordinate.createSphericCoordinate(radius, phi, theta);
 		}
-		return new SphericCoordinate(ParamsUtil.EARTH_RADIUS, 0.0, 0.0);
+		return SphericCoordinate.createSphericCoordinate(ParamsUtil.EARTH_RADIUS, 0.0, 0.0);
 	}
 
 	/**
@@ -190,6 +215,23 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		double phi = Math.atan2(this.getYCoordinate(), this.getXCoordinate());
 		assertLatitude(phi);
 		return phi;
+	}
+
+	/**
+	 * Checks if the CartesianCoordinate Object, that should be created, already
+	 * exists.
+	 * 
+	 * @param key
+	 * @return boolean
+	 */
+	private static boolean checkExistence(String key) {
+		boolean coordinateExists = sharedCartesianCoordinatesMap.containsKey(key);
+		return coordinateExists;
+	}
+
+	private static String toString(double x, double y, double z) {
+		String asString = "x: " + x + ", " + "y: " + y + ", " + "z " + z;
+		return asString;
 	}
 
 	/**
@@ -254,27 +296,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (!(isSpheric instanceof SphericCoordinate)) {
 			throw new WrongCoordinateTypeException(isSpheric);
 		}
-	}
-
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectXValueSet(double setValue) {
-		assert this.getXCoordinate() == setValue;
-	}
-
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectYValueSet(double setValue) {
-		assert this.getYCoordinate() == setValue;
-	}
-
-	/**
-	 * @methodtype: assertion
-	 */
-	private void assertCorrectZValueSet(double setValue) {
-		assert this.getZCoordinate() == setValue;
 	}
 
 }

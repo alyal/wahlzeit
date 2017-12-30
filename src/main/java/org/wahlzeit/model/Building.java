@@ -39,7 +39,7 @@ public class Building {
 	public Building() {
 		this.constructionYear = 1900;
 		this.name = "Unknown";
-		this.location = new Location(new CartesianCoordinate(1.0, 1.0, 1.0));
+		this.location = new Location(CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0));
 	}
 
 	/**

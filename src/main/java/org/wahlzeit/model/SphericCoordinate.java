@@ -19,6 +19,9 @@
  */
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
@@ -29,10 +32,12 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private final double longitude;
 	private final double radius;
 
+	private static Map<String, SphericCoordinate> sharedSphericCoordinatesMap = new HashMap<String, SphericCoordinate>();
+
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double radius, double latitude, double longitude) {
+	private SphericCoordinate(double radius, double latitude, double longitude) {
 
 		assertRadius(radius);
 		assertLatitude(latitude);
@@ -43,6 +48,27 @@ public class SphericCoordinate extends AbstractCoordinate {
 		this.longitude = longitude;
 
 		assertClassInvariants();
+	}
+
+	/**
+	 * Creates a new SphericCoordinate Object if it does not exist already. If an
+	 * Instance already exists, it returns the existing one.
+	 * 
+	 * @param radius
+	 * @param latitude
+	 * @param longitude
+	 * @return
+	 */
+	public static final SphericCoordinate createSphericCoordinate(double radius, double latitude, double longitude) {
+		String sharedKey = toString(radius, latitude, longitude);
+		boolean coordinateAlreadyExists = checkExistence(sharedKey);
+
+		if (coordinateAlreadyExists) {
+			return sharedSphericCoordinatesMap.get(sharedKey);
+		}
+		SphericCoordinate newSphericCoordinate = new SphericCoordinate(radius, latitude, longitude);
+		sharedSphericCoordinatesMap.put(sharedKey, newSphericCoordinate);
+		return newSphericCoordinate;
 	}
 
 	// Getter
@@ -77,36 +103,43 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return latitudeCopy;
 	}
 
-	// SETTERS:
-
 	/**
 	 * 
 	 */
-	private void setRadius(double x) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public SphericCoordinate createCoordinateWithRadius(double radius) {
+		assertClassInvariants();
+		assertDouble(radius);
+
+		SphericCoordinate coordinateWithRadius =  SphericCoordinate.createSphericCoordinate(radius, this.latitude, this.longitude);
+
+		assertClassInvariants();
+		return coordinateWithRadius;
 	}
 
 	/**
 	 * 
 	 */
-	private void setLongitude(double y) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public SphericCoordinate createCoordinateWithLatitude(double latitude) {
+		assertClassInvariants();
+		assertDouble(latitude);
+
+		SphericCoordinate coordinateWithLatitude = SphericCoordinate.createSphericCoordinate(this.radius, latitude, this.longitude);
+
+		assertClassInvariants();
+		return coordinateWithLatitude;
 	}
 
 	/**
 	 * 
 	 */
-	private void setLatitude(double z) {
-		// do nothing because Object should be immutable, so nothing should be changed
-		// (see lecture C07 p.10: "no mutation methods of return type void").
-		// As I didn’t know how to use setters appropriate within a value object class I
-		// made them private and they do nothing for now.
+	public SphericCoordinate createCoordinateWithLongitude(double longitude) {
+		assertClassInvariants();
+		assertDouble(longitude);
+
+		SphericCoordinate coordinateWithLongitude = SphericCoordinate.createSphericCoordinate(this.radius, this.latitude, longitude);
+
+		assertClassInvariants();
+		return coordinateWithLongitude;
 	}
 
 	/**
@@ -138,7 +171,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 		assertClassInvariants();
 
-		return new CartesianCoordinate(x, y, z);
+		return CartesianCoordinate.createCartesianCoordinate(x, y, z);
 	}
 
 	/**
@@ -162,11 +195,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return radius * cosTheta;
 	};
 
+	/**
+	 * returns this Object, as we already have a spheric coordinate
+	 * representation
+	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		SphericCoordinate copyOfSpheric = new SphericCoordinate(this.getRadius(), this.getLatitude(),
-				this.getLongitude());
-		return copyOfSpheric;
+		return this;
 	}
 
 	/**
@@ -196,6 +231,19 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 
 		return distance;
+	}
+
+	/**
+	 * Checks if the SphericCoordinate Object, that should be created, already
+	 * exists.
+	 * 
+	 * @param key
+	 * @return boolean
+	 */
+
+	private static boolean checkExistence(String key) {
+		boolean coordinateExists = sharedSphericCoordinatesMap.containsKey(key);
+		return coordinateExists;
 	}
 
 	/**
@@ -242,6 +290,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 		}
 
 		return false;
+	}
+
+	private static final String toString(double radius, double latitude, double longitude) {
+		String asString = "radius: " + radius + ", " + "latidude: " + latitude + ", " + "longitude: " + longitude;
+		return asString;
 	}
 
 	/**
