@@ -26,6 +26,8 @@ import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
+
+@DesignPattern(name = "Value Object", participants = { "SphericCoordinate" })
 public class SphericCoordinate extends AbstractCoordinate {
 
 	private final double latitude;

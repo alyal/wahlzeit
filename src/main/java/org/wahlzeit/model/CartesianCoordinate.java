@@ -26,6 +26,8 @@ import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
+
+@DesignPattern(name = "Value Object", participants = { "CartesianCoordinate" })
 public class CartesianCoordinate extends AbstractCoordinate {
 
 	private final double x;
@@ -50,6 +52,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 	}
 
+	/**
+	 * @methodtype factory
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
 	public static final CartesianCoordinate createCartesianCoordinate(double x, double y, double z) {
 		String sharedKey = toString(x, y, z);
 		boolean coordinateAlreadyExists = checkExistence(sharedKey);

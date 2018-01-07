@@ -7,6 +7,7 @@ import org.wahlzeit.utils.AssertionUtils;
 /**
  * BuildingsPhotoManager is a subclass of {@PhotoManager}.
  */
+@DesignPattern(name = "Singleton", participants = { "BuildingsPhotoManager" })
 public class BuildingsPhotoManager extends PhotoManager {
 
 	private static final Logger log = Logger.getLogger(BuildingsPhotoManager.class.getName());

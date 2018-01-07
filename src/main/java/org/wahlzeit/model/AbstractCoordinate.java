@@ -23,6 +23,7 @@ import org.wahlzeit.exceptions.NegativeDistanceException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
+@DesignPattern(name = "Template", participants = { "AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate" })
 public abstract class AbstractCoordinate implements Coordinate {
 
 	/**

@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import org.wahlzeit.exceptions.PhotoFactoryCreationException;
 import org.wahlzeit.services.LogBuilder;
 
+
+@DesignPattern(name = "Singleton", participants = { "BuildingsPhotoFactory" })
 public class BuildingsPhotoFactory extends PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(BuildingsPhotoFactory.class.getName());
@@ -80,7 +82,6 @@ public class BuildingsPhotoFactory extends PhotoFactory {
 	/**
 	 * @methodtype factory
 	 */
-
 	public BuildingPhoto createBuildingsPhoto(Building building) throws PhotoFactoryCreationException {
 		BuildingPhoto photo;
 		try {
