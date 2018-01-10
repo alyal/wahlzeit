@@ -32,11 +32,16 @@ public class Building {
 	private String name;
 	private Location location;
 	private final String className = this.getClass().getSimpleName();
+	protected BuildingsType buildingsType;
 
 	/**
 	 * default constructor
+	 * 
+	 * @param buildingsType
 	 */
-	public Building() {
+	public Building(BuildingsType buildingsType) {
+		AssertionUtils.assertNotNull(buildingsType);
+		this.buildingsType = buildingsType;
 		this.constructionYear = 1900;
 		this.name = "Unknown";
 		this.location = new Location(CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0));
@@ -48,14 +53,17 @@ public class Building {
 	 * @param year
 	 * @param name
 	 * @param location
+	 * @param buildingsType
 	 */
-	public Building(int year, String name, Location location) {
+	public Building(int year, String name, Location location, BuildingsType buildingsType) {
 		AssertionUtils.assertNotNull(year, className);
 		AssertionUtils.assertNotNull(name, className);
 		AssertionUtils.assertNotNull(location, className);
+		AssertionUtils.assertNotNull(buildingsType, className);
 		this.constructionYear = year;
 		this.name = name;
 		this.location = location;
+		this.buildingsType = buildingsType;
 	}
 
 	/**
@@ -108,6 +116,22 @@ public class Building {
 	public void setLocation(Location location) {
 		AssertionUtils.assertNotNull(location, className);
 		this.location = location;
+	}
+
+	/**
+	 * @methodtype get
+	 * @methodproperty primitive
+	 */
+	public BuildingsType getTyp() {
+		return this.buildingsType;
+	}
+
+	/**
+	 * @methodtype get
+	 * @methodproperty primitive
+	 */
+	public boolean isSubtype(Building obj) {
+		return obj.getTyp() instanceof BuildingsType;
 	}
 
 	/**
