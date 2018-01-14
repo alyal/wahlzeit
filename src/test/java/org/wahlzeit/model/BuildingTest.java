@@ -14,7 +14,7 @@ public class BuildingTest {
 	@Before
 	public void setUp() {
 		this.location = new Location(CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0));
-		this.testType = new BuildingsType("test");
+		this.testType = new BuildingsType("test", "testArchitecture");
 	}
 
 	@Test

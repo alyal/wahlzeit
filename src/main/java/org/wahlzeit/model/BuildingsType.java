@@ -19,19 +19,49 @@
  */
 package org.wahlzeit.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.wahlzeit.utils.AssertionUtils;
+
+import com.googlecode.objectify.annotation.Entity;
+
+@Entity
 public class BuildingsType {
 
+	/**
+	 * The name of the buildingsType (e.g. skyscraper, church, etc.)
+	 */
 	private String typeName;
 
 	/**
+	 * Describes the architecture of the building (e.g. renaissance, postmodernism,
+	 * baroque, etc )
+	 */
+	private String architecture;
+
+	/**
+	 * The supertype of this BuidlingsType and its potential subtypes
+	 */
+	protected BuildingsType superType;
+
+	/**
+	 * Set of buildingsTypes representing the Type hierarchy
+	 */
+	private Set<BuildingsType> buildingsSubTypes = new HashSet<BuildingsType>();
+
+	/**
+	 * Constructor
 	 * 
 	 * @param name
 	 */
-	public BuildingsType(String name) {
+	public BuildingsType(String name, String architecture) {
 		this.typeName = name;
+		this.architecture = architecture;
 	}
 
 	/**
+	 * creates a new Building instance of this BuildingsType
 	 * 
 	 * @return
 	 */
@@ -40,6 +70,7 @@ public class BuildingsType {
 	}
 
 	/**
+	 * Creates a Buildings instance of this BuildingsType and the given parameters
 	 * 
 	 * @param year
 	 * @param name
@@ -51,6 +82,7 @@ public class BuildingsType {
 	}
 
 	/**
+	 * Returns the Buildingstypes name
 	 * 
 	 * @return
 	 */
@@ -59,11 +91,102 @@ public class BuildingsType {
 	}
 
 	/**
+	 * Sets the BuildingsType name
 	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
+		AssertionUtils.assertNotNull(name);
+		AssertionUtils.assertStringNotEmpty(name);
 		this.typeName = name;
+	}
+
+	/**
+	 * Returns the BuildingsTypes architecture
+	 * 
+	 * @return architecture
+	 */
+	private String getArchitecture() {
+		return architecture;
+	}
+
+	/**
+	 * Sets the BuildingsTypes architecture
+	 * 
+	 * @param architectureName
+	 */
+	private void setArchitecture(String architectureName) {
+		AssertionUtils.assertNotNull(architectureName);
+		AssertionUtils.assertStringNotEmpty(architectureName);
+		this.architecture = architectureName;
+	}
+
+	/**
+	 * Sets the BuildingsTypes supertype
+	 * 
+	 * @param type
+	 */
+	private void setSuperType(BuildingsType type) {
+		AssertionUtils.assertNotNull(type);
+		this.superType = type;
+	}
+
+	/**
+	 * Returns the BuildingsTypes supertype
+	 * 
+	 * @return
+	 */
+	public BuildingsType getSuperType() {
+		return superType;
+	}
+
+	/**
+	 * Adds a new BuildingsType to the buildingsTypSet tree as a new subtype. The
+	 * new added subtype is the than the supertype of all its underlying subtypes.
+	 * 
+	 * @param buidlingsSubType
+	 */
+	public void addBuildingsSubType(BuildingsType buidlingsSubType) {
+		AssertionUtils.assertNotNull(buidlingsSubType);
+		boolean alreadyExists = checkExistence(buidlingsSubType);
+		if (!alreadyExists) {
+			buidlingsSubType.setSuperType(this);
+			buildingsSubTypes.add(buidlingsSubType);
+		}
+	}
+
+	/**
+	 * Checks if the type already exists.
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public boolean checkExistence(BuildingsType type) {
+		AssertionUtils.assertNotNull(type);
+		boolean isSubtype = buildingsSubTypes.contains(type);
+		return isSubtype;
+	}
+
+	/**
+	 * Checks recursively if a given Buildingstype is of the same type or if it does
+	 * exist within the subtree. If the type exists true is returned, otherwise
+	 * false is returned
+	 * 
+	 * @param building
+	 * @return boolean
+	 */
+	public boolean isSubtype(BuildingsType type) {
+		AssertionUtils.assertNotNull(type);
+		if (type == this) {
+			return true;
+		}
+		for (BuildingsType nextType : buildingsSubTypes) {
+			if (nextType.isSubtype(type)) {
+				return true;
+			}
+		}
+		return false;
+
 	}
 
 }

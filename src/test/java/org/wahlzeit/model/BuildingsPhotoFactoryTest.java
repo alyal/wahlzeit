@@ -59,7 +59,7 @@ public class BuildingsPhotoFactoryTest {
 
 	@Test
 	public void createPhotoTestWithBuilding() throws PhotoFactoryCreationException {
-		BuildingsType testType = new BuildingsType("Test");
+		BuildingsType testType = new BuildingsType("Test", "testArchitecture");
 		instance.createBuildingsPhoto(new Building(testType));
 	}
 

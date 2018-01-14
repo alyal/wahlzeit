@@ -28,7 +28,7 @@ public class BuildingPhotoTest {
 
 	@Test
 	public void createBuildingsPhotoTest() {
-		BuildingsType type = new BuildingsType("testType");
+		BuildingsType type = new BuildingsType("testType", "testArchitecture");
 		Building building = new Building(type);
 		BuildingPhoto photo = new BuildingPhoto(building);
 		assertNotNull(photo);

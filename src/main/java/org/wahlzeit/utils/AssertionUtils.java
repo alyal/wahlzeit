@@ -31,7 +31,7 @@ public class AssertionUtils {
 			throw new IllegalArgumentException("null as an argument is not allowed!");
 		}
 	}
-
+	
 	/**
 	 * @throws IllegalArgumentException
 	 * @mthodtype: assertion
@@ -53,6 +53,12 @@ public class AssertionUtils {
 			log.warning("Error in: " + className + "! Passed argument is not an instance of PhotoId, but was: "
 					+ o.getClass().getName());
 			throw new IllegalArgumentException("Passed argument is not an instance of PhotoId!");
+		}
+	}
+
+	public static void assertStringNotEmpty(String s) {
+		if (s.isEmpty()) {
+			throw new IllegalArgumentException("Passed String is empty. Empty Stings are not allowed!");
 		}
 	}
 
