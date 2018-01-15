@@ -21,6 +21,7 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.utils.AssertionUtils;
 
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Subclass;
 
 /**
@@ -37,6 +38,8 @@ public class BuildingPhoto extends Photo {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// TODO: Find out why problem with Objectify occurs here when not ignored.
+	@Ignore
 	private Building building;
 	private final String className = this.getClass().getSimpleName();
 

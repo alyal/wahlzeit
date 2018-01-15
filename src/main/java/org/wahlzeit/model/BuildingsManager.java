@@ -52,7 +52,7 @@ public class BuildingsManager {
 	 * 
 	 * @return
 	 */
-	public BuildingsManager getBuildingsManagerInstance() {
+	public static BuildingsManager getBuildingsManagerInstance() {
 		return buildingsManagerInstance;
 	}
 
@@ -78,7 +78,7 @@ public class BuildingsManager {
 	 * @param buildingsType
 	 * @return
 	 */
-	public Building createBuilding(int year, String name, Location location, String buildingsType) {
+	public synchronized Building createBuilding(int year, String name, Location location, String buildingsType) {
 		AssertionUtils.assertNotNull(location);
 		AssertionUtils.assertNotNull(name);
 		AssertionUtils.assertNotNull(buildingsType);

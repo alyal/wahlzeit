@@ -106,7 +106,7 @@ public class BuildingsType {
 	 * 
 	 * @return architecture
 	 */
-	private String getArchitecture() {
+	public String getArchitecture() {
 		return architecture;
 	}
 
@@ -115,7 +115,7 @@ public class BuildingsType {
 	 * 
 	 * @param architectureName
 	 */
-	private void setArchitecture(String architectureName) {
+	public void setArchitecture(String architectureName) {
 		AssertionUtils.assertNotNull(architectureName);
 		AssertionUtils.assertStringNotEmpty(architectureName);
 		this.architecture = architectureName;
@@ -167,8 +167,9 @@ public class BuildingsType {
 		return isSubtype;
 	}
 
+	// Should maybe be renamed to hasSubtype
 	/**
-	 * Checks recursively if a given Buildingstype is of the same type or if it does
+	 * Checks recursively if a given BuildingsType is of the same type or if it does
 	 * exist within the subtree. If the type exists true is returned, otherwise
 	 * false is returned
 	 * 
@@ -177,7 +178,7 @@ public class BuildingsType {
 	 */
 	public boolean isSubtype(BuildingsType type) {
 		AssertionUtils.assertNotNull(type);
-		if (type == this) {
+		if (type.equals(this)) {
 			return true;
 		}
 		for (BuildingsType nextType : buildingsSubTypes) {

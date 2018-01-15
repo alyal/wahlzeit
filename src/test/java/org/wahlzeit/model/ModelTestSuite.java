@@ -43,7 +43,9 @@ import org.wahlzeit.model.persistence.PersistenceTestSuite;
         BuildingPhotoTest.class,
         BuildingsPhotoFactoryTest.class,
         CartesianCoordinateTest.class,
-        SphericCoordinateTest.class
+        SphericCoordinateTest.class,
+        BuildingsManagerTest.class,
+        BuildingsTypeTest.class
 })
 
 /**
