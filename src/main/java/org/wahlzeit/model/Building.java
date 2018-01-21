@@ -22,10 +22,13 @@ package org.wahlzeit.model;
 import org.joda.time.LocalDate;
 import org.wahlzeit.utils.AssertionUtils;
 
+import com.googlecode.objectify.annotation.Entity;
+
 /**
  * Class representing a building and its properties
  *
  */
+@Entity
 public class Building {
 
 	private int constructionYear;
