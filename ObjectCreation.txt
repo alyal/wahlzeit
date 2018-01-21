@@ -10,7 +10,7 @@ Sequence of method calls that lead to the new BuildingsPhoto object:
 Object creation solution in the solution space:
 Delegation: separate-object, by BuildingsPhotoFactory 
 Selection: no selection (by a user) as presented in lecture so far
-Configuration: no selection (by a user) as presented in lecture so far
+Configuration: no configuration (by a user) as presented in lecture so far
 Instantiation: in-code, by the constructor
 Initialization: default, by the constructor
 Building: default
