@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.wahlzeit.exceptions.BuildingsTypeDoesNotExistException;
 import org.wahlzeit.utils.AssertionUtils;
+import org.wahlzeit.utils.ParamsUtil;
 
 /**
  * A BuildingsManager to manage Buildings & BuildingsType
@@ -44,6 +45,11 @@ public class BuildingsManager {
 	/**
 	 * 
 	 */
+	private static final Map<String, Building> buildingsChache = new HashMap<String, Building>();
+
+	/**
+	 * 
+	 */
 	private BuildingsManager() {
 
 	}
@@ -54,19 +60,6 @@ public class BuildingsManager {
 	 */
 	public static BuildingsManager getBuildingsManagerInstance() {
 		return buildingsManagerInstance;
-	}
-
-	/**
-	 * Creates a default building with a buildingsType
-	 * 
-	 * @param buildingsType
-	 * @return
-	 */
-	public synchronized Building createBuilding(String buildingsType) {
-		AssertionUtils.assertNotNull(buildingsType);
-		BuildingsType type = getBuildingsType(buildingsType);
-		Building building = type.createInstance();
-		return building;
 	}
 
 	/**
@@ -84,7 +77,7 @@ public class BuildingsManager {
 		AssertionUtils.assertNotNull(buildingsType);
 		AssertionUtils.assertNotNull(year);
 		BuildingsType type = getBuildingsType(buildingsType);
-		Building building = type.createInstance(year, name, location);
+		Building building = getBuilding(year, name, location, type);
 		return building;
 	}
 
@@ -129,6 +122,18 @@ public class BuildingsManager {
 		}
 	}
 
+	public static Building getBuilding(int year, String name, Location location, BuildingsType buildingsType) {
+		String key = ParamsUtil.createBuildingsID(year, name, location, buildingsType);
+		boolean buildingExists = checkBuildingsExistence(key);
+		if (buildingExists) {
+			return buildingsChache.get(key);
+		} else {
+			Building building = buildingsType.createInstance(year, name, location);
+			buildingsChache.put(key, building);
+			return building;
+		}
+	}
+
 	/**
 	 * Checks if the type already exists.
 	 * 
@@ -138,6 +143,16 @@ public class BuildingsManager {
 	private static boolean checkExistence(String key) {
 		boolean typeExists = buildingsTypeChache.containsKey(key);
 		return typeExists;
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	private static boolean checkBuildingsExistence(String key) {
+		boolean buildingExisits = buildingsChache.containsKey(key);
+		return buildingExisits;
 	}
 
 }

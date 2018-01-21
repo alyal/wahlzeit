@@ -21,6 +21,7 @@ package org.wahlzeit.model;
 
 import org.joda.time.LocalDate;
 import org.wahlzeit.utils.AssertionUtils;
+import org.wahlzeit.utils.ParamsUtil;
 
 import com.googlecode.objectify.annotation.Entity;
 
@@ -38,17 +39,10 @@ public class Building {
 	protected BuildingsType buildingsType;
 
 	/**
-	 * default constructor
-	 * 
-	 * @param buildingsType
+	 * As I am not sure if buildings really have an ID, I generate an own String to
+	 * have a key for storing it in the HashMap of BuildingsManager
 	 */
-	public Building(BuildingsType buildingsType) {
-		AssertionUtils.assertNotNull(buildingsType);
-		this.buildingsType = buildingsType;
-		this.constructionYear = 1900;
-		this.name = "Unknown";
-		this.location = new Location(CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0));
-	}
+	private String buildingsID;
 
 	/**
 	 * constructor
@@ -67,6 +61,7 @@ public class Building {
 		this.name = name;
 		this.location = location;
 		this.buildingsType = buildingsType;
+		this.buildingsID = ParamsUtil.createBuildingsID(year, name, location, buildingsType);
 	}
 
 	/**
@@ -119,6 +114,23 @@ public class Building {
 	public void setLocation(Location location) {
 		AssertionUtils.assertNotNull(location, className);
 		this.location = location;
+	}
+
+	/**
+	 * @methodtype get
+	 * @methodproperty primitive
+	 */
+	public String getID() {
+		return buildingsID;
+	}
+
+	/**
+	 * @methodtype set
+	 * @methodproperty primitive
+	 */
+	public void setID(String iD) {
+		AssertionUtils.assertNotNull(iD, className);
+		this.buildingsID = iD;
 	}
 
 	/**

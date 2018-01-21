@@ -60,7 +60,9 @@ public class BuildingsPhotoFactoryTest {
 	@Test
 	public void createPhotoTestWithBuilding() throws PhotoFactoryCreationException {
 		BuildingsType testType = new BuildingsType("Test", "testArchitecture");
-		instance.createBuildingsPhoto(new Building(testType));
+		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
+		Location testLocation = new Location(testCoordinate);
+		instance.createBuildingsPhoto(new Building(2000, "TestName", testLocation, testType));
 	}
 
 	@Test(expected = PhotoFactoryCreationException.class)

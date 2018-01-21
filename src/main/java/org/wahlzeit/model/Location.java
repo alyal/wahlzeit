@@ -46,4 +46,13 @@ public class Location {
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String asString() {
+		return "Lat:" + this.coordinate.asSphericCoordinate().getLatitude() + "/Long:"
+				+ this.coordinate.asSphericCoordinate().getLongitude();
+	}
 }

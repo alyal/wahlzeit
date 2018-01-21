@@ -57,15 +57,6 @@ public class BuildingsManagerTest {
 	}
 
 	@Test
-	public void createBuildingTest() {
-		Building building = manager.createBuilding("testType");
-		assertNotNull(building);
-		assertEquals(building.getTyp().getName(), "testType");
-		assertEquals(building.getTyp().getArchitecture(), "testArchitecture");
-		assertEquals(building.getConstructionYear(), 1900);
-	}
-
-	@Test
 	public void createBuildingTestWithParameters() {
 		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
 		Location testLocation = new Location(testCoordinate);
@@ -76,11 +67,14 @@ public class BuildingsManagerTest {
 		assertEquals(building.getConstructionYear(), 2000);
 		assertEquals(building.getLocation(), testLocation);
 		assertEquals(building.getName(), "TestName");
+		assertEquals(building.getID(), "2000/TestName/testType/Lat:0.7853981633974483/Long:0.9553166181245092");
 	}
 
 	@Test(expected = BuildingsTypeDoesNotExistException.class)
-	public void createBuildingTestWithNotExitstingTxpe() {
-		Building building = manager.createBuilding("testType2");
+	public void createBuildingTestWithNotExitstingType() {
+		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
+		Location testLocation = new Location(testCoordinate);
+		Building building = manager.createBuilding(2000, "TestName2", testLocation, "testType2");
 		assertNotNull(building);
 	}
 

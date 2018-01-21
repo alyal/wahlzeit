@@ -58,12 +58,6 @@ public class BuildingsTypeTest {
 	}
 
 	@Test
-	public void createInstanceTest() {
-		Building building = testType.createInstance();
-		assertNotNull(building);
-	}
-
-	@Test
 	public void createInstanceWithParameters() {
 		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
 		Location testLocation = new Location(testCoordinate);

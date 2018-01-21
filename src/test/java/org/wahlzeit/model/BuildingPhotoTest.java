@@ -29,7 +29,9 @@ public class BuildingPhotoTest {
 	@Test
 	public void createBuildingsPhotoTest() {
 		BuildingsType type = new BuildingsType("testType", "testArchitecture");
-		Building building = new Building(type);
+		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
+		Location testLocation = new Location(testCoordinate);
+		Building building = new Building(2000, "TestName", testLocation, type);
 		BuildingPhoto photo = new BuildingPhoto(building);
 		assertNotNull(photo);
 		assertEquals(photo.getBuilding().getTyp().getName(), "testType");

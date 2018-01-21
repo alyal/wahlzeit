@@ -18,16 +18,6 @@ public class BuildingTest {
 	}
 
 	@Test
-	public void createBuildingTestDefault() {
-		Building building = new Building(testType);
-		assertNotNull(building);
-		assertEquals(building.getConstructionYear(), 1900);
-		assertEquals(building.getName(), "Unknown");
-		assertNotNull(building.getLocation());
-		assertEquals(building.getTyp().getName(), "test");
-	}
-
-	@Test
 	public void createBuildingTest() {
 		Building building = new Building(2017, "Building", location, testType);
 		assertNotNull(building);
@@ -35,11 +25,14 @@ public class BuildingTest {
 		assertEquals(building.getName(), "Building");
 		assertEquals(building.getLocation(), location);
 		assertEquals(building.getTyp().getName(), "test");
+		assertEquals(building.getID(), "2017/Building/test/Lat:0.7853981633974483/Long:0.9553166181245092");
 	}
 
 	@Test
 	public void setBuildingTest() {
-		Building building = new Building(testType);
+		CartesianCoordinate testCoordinate = CartesianCoordinate.createCartesianCoordinate(1.0, 1.0, 1.0);
+		Location testLocation = new Location(testCoordinate);
+		Building building = new Building(2000, "Bla", testLocation, testType);
 		assertNotNull(building);
 		building.setConstructionYear(1234);
 		building.setLocation(location);

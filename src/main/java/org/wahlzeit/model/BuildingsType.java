@@ -61,15 +61,6 @@ public class BuildingsType {
 	}
 
 	/**
-	 * creates a new Building instance of this BuildingsType
-	 * 
-	 * @return
-	 */
-	public Building createInstance() {
-		return new Building(this);
-	}
-
-	/**
 	 * Creates a Buildings instance of this BuildingsType and the given parameters
 	 * 
 	 * @param year
