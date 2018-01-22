@@ -16,8 +16,8 @@ BuildingsPhotoFactory: createPhoto() --> BuildingsPhoto: new BuildingsPhoto()
 ### Object creation solution in the solution space: ###
 
 Delegation: separate-object, by BuildingsPhotoFactory 
-Selection: no selection (by a user) as presented in lecture so far
-Configuration: no selection (by a user) as presented in lecture so far
+Selection: by-subclassing
+Configuration: on-the-spot
 Instantiation: in-code, by the constructor
 Initialization: default, by the constructor
 Building: default
@@ -41,8 +41,8 @@ BuildingsManager: createBuilding() --> BuildingsManager: getBuildingsType() --> 
 ### Object creation solution in the solution space: ###
  
 Delegation: separate-object, by BuilingsType 
-Selection: no selection (by a user) as presented in lecture so far 
-Configuration: no configuration (by a user) as presented in lecture so far
+Selection: on-the-spot
+Configuration: in-code
 Instantiation: in-code, by constructor
 Initialization: default, by constructor
 Building: default
