@@ -2,7 +2,8 @@
 
 ### Sequence of method calls that lead to the new BuildingsPhoto object: ###
 
-PhotoManager: createPhoto() --> PhotoUtil: createPhoto() --> BuildingsPhotoFactory: createPhoto() --> Building: new Building(…)
+UploadPhotoFormHandler: doHandlePost() --> PhotoManager: createPhoto() --> PhotoUtil: createPhoto() -->
+BuildingsPhotoFactory: createPhoto() --> Building: new Building()
 
 ### Explanation: ### 
 
