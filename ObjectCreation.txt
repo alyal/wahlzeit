@@ -17,7 +17,7 @@ BuildingsPhotoFactory: createPhoto() --> BuildingsPhoto: new BuildingsPhoto()
 
 Delegation: separate-object, by BuildingsPhotoFactory 
 Selection: by-subclassing
-Configuration: on-the-spot
+Configuration: in-code
 Instantiation: in-code, by the constructor
 Initialization: default, by the constructor
 Building: default
