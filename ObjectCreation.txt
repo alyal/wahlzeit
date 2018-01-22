@@ -3,7 +3,7 @@
 ### Sequence of method calls that lead to the new BuildingsPhoto object: ###
 
 UploadPhotoFormHandler: doHandlePost() --> PhotoManager: createPhoto() --> PhotoUtil: createPhoto() -->
-BuildingsPhotoFactory: createPhoto() --> Building: new Building()
+BuildingsPhotoFactory: createPhoto() --> BuildingsPhoto: new BuildingsPhoto()
 
 ### Explanation: ### 
 
@@ -11,7 +11,7 @@ BuildingsPhotoFactory: createPhoto() --> Building: new Building()
 (2) Within the createPhoto() method from (1) the createPhoto() method from PhotoUtil class is called
 (3) Within the createPhoto() method of PhotoUtil the singleton instance of the domain PhotoFactory (BuildingsPhotoFactory) is fetched
 (4) On the singleton BuildingsPhotoFactory instance of (3) the createPhoto() in the Factory is called with a PhotoID as parameter
-(5) Within the BuildingsPhotoFactory the BuildingsPhoto object with the passed PhotoID from (4) is created by the createPhoto() method calling the Buildings class constructor.
+(5) Within the BuildingsPhotoFactory the BuildingsPhoto object with the passed PhotoID from (4) is created by the createPhoto() method calling the BuildingsPhoto class constructor.
 
 ### Object creation solution in the solution space: ###
 
