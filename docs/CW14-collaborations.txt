@@ -1,0 +1,81 @@
+
+
+
+=============== Collaboration =============== 
+Public collaboration BuildingsPhotoBuldings {
+
+	Public role BuildingsPhoto {
+		public Building getBuilding() {...},
+		public void setBuilding(Building building) {...},
+		...
+	}
+
+	Public role Buildig {
+		public Location getLocation() {}
+		public void setLocation(Location location) {}
+		…
+	}
+
+...
+}
+=============== Usage: ===============
+
+Public class BuidlingsPhoto binds BuildingsPhotoBuldings.Building {
+	...
+}
+
+Public class Building binds BuildingsPhotoBuldings.BuildingsPhoto {
+	...
+}
+
+=============== Collaboration =============== 
+Public collaboration BuildingsTypeBuildings {
+
+	Public role BuildingsType {
+		public Building createInstance( ) {...},
+		public void setName(String name) {}
+		public String getName() {}
+		public String getArchitecture() {}
+		public void setArchitecture(String architectureName) {},
+		...
+	
+}
+
+Public role Building {
+	…
+}
+
+=============== Usage: ===============
+
+Public class BuidlingsType binds BuildingsPhotoBuldings.Building {
+	...
+}
+
+Public class Building binds BuildingsPhotoBuldings.BuildingsType {
+	...
+}
+
+=============== Collaboration =============== 
+Public collaboration BuildingsManagerBuildings {
+	Public role BuildingsManager {
+		public static Building getBuilding (...) {},
+		public synchronized Building createBuilding(...) {},
+		...			
+	}
+
+Public role Buildig {
+	…
+}
+
+=============== Usage: ===============
+
+Public class BuidlingsManager binds BuildingsPhotoBuldings.Building {
+	...
+}
+
+Public class Building binds BuildingsPhotoBuldings.BuildingsManager {
+	...
+}
+
+
+
