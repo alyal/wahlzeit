@@ -1,16 +1,13 @@
-﻿
+﻿=============== Collaboration =============== 
+public collaboration BuildingsPhotoBuldings {
 
-
-=============== Collaboration =============== 
-Public collaboration BuildingsPhotoBuldings {
-
-	Public role BuildingsPhoto {
+	public role BuildingsPhoto {
 		public Building getBuilding() {...},
 		public void setBuilding(Building building) {...},
 		...
 	}
 
-	Public role Building {
+	public role Building {
 		public Location getLocation() {}
 		public void setLocation(Location location) {}
 		…
@@ -20,18 +17,18 @@ Public collaboration BuildingsPhotoBuldings {
 }
 =============== Usage: ===============
 
-Public class BuidlingsPhoto binds BuildingsPhotoBuldings.Building {
+public class BuidlingsPhoto binds BuildingsPhotoBuldings.Building {
 	...
 }
 
-Public class Building binds BuildingsPhotoBuldings.BuildingsPhoto {
+public class Building binds BuildingsPhotoBuldings.BuildingsPhoto {
 	...
 }
 
 =============== Collaboration =============== 
-Public collaboration BuildingsTypeBuildings {
+public collaboration BuildingsTypeBuildings {
 
-	Public role BuildingsType {
+	public role BuildingsType {
 		public Building createInstance( ) {...},
 		public void setName(String name) {}
 		public String getName() {}
@@ -41,39 +38,39 @@ Public collaboration BuildingsTypeBuildings {
 	
 }
 
-Public role Building {
+public role Building {
 	…
 }
 
 =============== Usage: ===============
 
-Public class BuidlingsType binds BuildingsTypeBuildings.Building {
+public class BuidlingsType binds BuildingsTypeBuildings.Building {
 	...
 }
 
-Public class Building binds BuildingsTypeBuildings.BuildingsType {
+public class Building binds BuildingsTypeBuildings.BuildingsType {
 	...
 }
 
 =============== Collaboration =============== 
-Public collaboration BuildingsManagerBuildings {
-	Public role BuildingsManager {
+public collaboration BuildingsManagerBuildings {
+	public role BuildingsManager {
 		public static Building getBuilding (...) {},
 		public synchronized Building createBuilding(...) {},
 		...			
 	}
 
-Public role Building {
+public role Building {
 	…
 }
 
 =============== Usage: ===============
 
-Public class BuidlingsManager binds BuildingsManagerBuildings.Building {
+public class BuidlingsManager binds BuildingsManagerBuildings.Building {
 	...
 }
 
-Public class Building binds BuildingsManagerBuildings.BuildingsManager {
+public class Building binds BuildingsManagerBuildings.BuildingsManager {
 	...
 }
 
