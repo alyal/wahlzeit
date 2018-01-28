@@ -1,4 +1,4 @@
-
+﻿
 
 
 =============== Collaboration =============== 
@@ -10,7 +10,7 @@ Public collaboration BuildingsPhotoBuldings {
 		...
 	}
 
-	Public role Buildig {
+	Public role Building {
 		public Location getLocation() {}
 		public void setLocation(Location location) {}
 		…
@@ -63,7 +63,7 @@ Public collaboration BuildingsManagerBuildings {
 		...			
 	}
 
-Public role Buildig {
+Public role Building {
 	…
 }
 
