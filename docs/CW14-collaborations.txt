@@ -47,11 +47,11 @@ Public role Building {
 
 =============== Usage: ===============
 
-Public class BuidlingsType binds BuildingsPhotoBuldings.Building {
+Public class BuidlingsType binds BuildingsTypeBuildings.Building {
 	...
 }
 
-Public class Building binds BuildingsPhotoBuldings.BuildingsType {
+Public class Building binds BuildingsTypeBuildings.BuildingsType {
 	...
 }
 
@@ -69,11 +69,11 @@ Public role Building {
 
 =============== Usage: ===============
 
-Public class BuidlingsManager binds BuildingsPhotoBuldings.Building {
+Public class BuidlingsManager binds BuildingsManagerBuildings.Building {
 	...
 }
 
-Public class Building binds BuildingsPhotoBuldings.BuildingsManager {
+Public class Building binds BuildingsManagerBuildings.BuildingsManager {
 	...
 }
 
