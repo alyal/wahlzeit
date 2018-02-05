@@ -38,12 +38,12 @@ public class BuildingsManager {
 	private static final BuildingsManager buildingsManagerInstance = new BuildingsManager();
 
 	/**
-	 * 
+	 * A Map for storing BuildingsTypes.
 	 */
 	private static final Map<String, BuildingsType> buildingsTypeChache = new HashMap<String, BuildingsType>();
 
 	/**
-	 * 
+	 * A Map for storing Buildings.
 	 */
 	private static final Map<String, Building> buildingsChache = new HashMap<String, Building>();
 
@@ -55,8 +55,8 @@ public class BuildingsManager {
 	}
 
 	/**
+	 * Returns the singleton instance of the BuildingsManager
 	 * 
-	 * @return
 	 */
 	public static BuildingsManager getBuildingsManagerInstance() {
 		return buildingsManagerInstance;
@@ -69,7 +69,6 @@ public class BuildingsManager {
 	 * @param name
 	 * @param location
 	 * @param buildingsType
-	 * @return
 	 */
 	public synchronized Building createBuilding(int year, String name, Location location, String buildingsType) {
 		AssertionUtils.assertNotNull(location);
@@ -87,7 +86,6 @@ public class BuildingsManager {
 	 * 
 	 * @param typeName
 	 * @param architectureName
-	 * @return
 	 */
 	public BuildingsType createBuildingsType(String typeName, String architectureName) {
 		AssertionUtils.assertNotNull(architectureName);
@@ -96,12 +94,14 @@ public class BuildingsManager {
 		AssertionUtils.assertStringNotEmpty(typeName);
 
 		boolean typeAlreadyExists = checkExistence(typeName);
-		if (!typeAlreadyExists) {
-			BuildingsType newBuildingsType = new BuildingsType(typeName, architectureName);
-			buildingsTypeChache.put(typeName, newBuildingsType);
-			return newBuildingsType;
-		} else {
+		if (typeAlreadyExists) {
 			return buildingsTypeChache.get(typeName);
+		} else {
+			synchronized (buildingsTypeChache) {
+				BuildingsType newBuildingsType = new BuildingsType(typeName, architectureName);
+				buildingsTypeChache.put(typeName, newBuildingsType);
+				return newBuildingsType;
+			}
 		}
 	}
 
@@ -110,7 +110,6 @@ public class BuildingsManager {
 	 * BuildingsTypeDoesNotExistException is thrown
 	 * 
 	 * @param buildingsType
-	 * @return
 	 * @throws BuildingsTypeDoesNotExistException
 	 */
 	public static BuildingsType getBuildingsType(String buildingsType) throws BuildingsTypeDoesNotExistException {
@@ -122,15 +121,27 @@ public class BuildingsManager {
 		}
 	}
 
+	/**
+	 * Returns the Building matching to the created BuildingsID. If it does not
+	 * exist, a new building is stored in the buildingsChache under the generated
+	 * BuildingsID.
+	 * 
+	 * @param year
+	 * @param name
+	 * @param location
+	 * @param buildingsType
+	 */
 	public static Building getBuilding(int year, String name, Location location, BuildingsType buildingsType) {
 		String key = ParamsUtil.createBuildingsID(year, name, location, buildingsType);
 		boolean buildingExists = checkBuildingsExistence(key);
 		if (buildingExists) {
 			return buildingsChache.get(key);
 		} else {
-			Building building = buildingsType.createInstance(year, name, location);
-			buildingsChache.put(key, building);
-			return building;
+			synchronized (buildingsChache) {
+				Building building = buildingsType.createInstance(year, name, location);
+				buildingsChache.put(key, building);
+				return building;
+			}
 		}
 	}
 
@@ -138,7 +149,6 @@ public class BuildingsManager {
 	 * Checks if the type already exists.
 	 * 
 	 * @param key
-	 * @return
 	 */
 	private static boolean checkExistence(String key) {
 		boolean typeExists = buildingsTypeChache.containsKey(key);
@@ -146,9 +156,10 @@ public class BuildingsManager {
 	}
 
 	/**
+	 * Checks if the Building already exists
 	 * 
 	 * @param key
-	 * @return
+	 * 
 	 */
 	private static boolean checkBuildingsExistence(String key) {
 		boolean buildingExisits = buildingsChache.containsKey(key);

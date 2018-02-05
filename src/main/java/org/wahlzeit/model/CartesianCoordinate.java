@@ -26,7 +26,6 @@ import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
-
 @DesignPattern(name = "Value Object", participants = { "CartesianCoordinate" })
 public class CartesianCoordinate extends AbstractCoordinate {
 
@@ -66,15 +65,17 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		if (coordinateAlreadyExists) {
 			return sharedCartesianCoordinatesMap.get(sharedKey);
 		}
-		CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
-		sharedCartesianCoordinatesMap.put(sharedKey, cartesianCoordinate);
-		return cartesianCoordinate;
+		synchronized (sharedCartesianCoordinatesMap) {
+			CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
+			sharedCartesianCoordinatesMap.put(sharedKey, cartesianCoordinate);
+			return cartesianCoordinate;
+		}
 	}
 
 	// Getters
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getXCoordinate() {
 		assertClassInvariants();
@@ -84,7 +85,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getYCoordinate() {
 		assertClassInvariants();
@@ -94,7 +95,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * @methodtype get
 	 */
 	public double getZCoordinate() {
 		assertClassInvariants();
@@ -104,53 +105,59 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Creates a Coordinate with a new x coordinate value and stores it in the
+	 * sharedCartesianCoordinatesMap if it does not already exist
 	 */
 	public CartesianCoordinate createCoordinateWithX(double x) {
 		assertClassInvariants();
 		assertDouble(x);
-	
+
 		CartesianCoordinate coordinateWithX = CartesianCoordinate.createCartesianCoordinate(x, this.y, this.z);
-	
+
 		assertClassInvariants();
 		return coordinateWithX;
 	}
 
 	/**
-	 * 
+	 * Creates a Coordinate with a new y coordinate value and stores it in the
+	 * sharedCartesianCoordinatesMap if it does not already exist
 	 */
 	public CartesianCoordinate createCoordinateWithY(double y) {
 		assertClassInvariants();
 		assertDouble(y);
-	
+
 		CartesianCoordinate coordinateWithY = CartesianCoordinate.createCartesianCoordinate(this.x, y, this.z);
-	
+
 		assertClassInvariants();
 		return coordinateWithY;
 	}
 
 	/**
-	 * 
+	 * Creates a Coordinate with a new z coordinate value and stores it in the
+	 * sharedCartesianCoordinatesMap if it does not already exist
 	 */
 	public CartesianCoordinate createCoordinateWithZ(double z) {
 		assertClassInvariants();
 		assertDouble(z);
-	
+
 		CartesianCoordinate coordinateWithZ = CartesianCoordinate.createCartesianCoordinate(this.x, this.y, z);
-	
+
 		assertClassInvariants();
 		return coordinateWithZ;
 	}
 
 	/**
-	 * returns this Object, as we already have a cartesian coordinate
-	 * representation
+	 * returns this Object, as we already have a cartesian coordinate representation
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
 		return this;
 	}
 
+	/**
+	 * Calculates the cartesian distance between this Cartesian Coordinate and the
+	 * passes Coordinate argument
+	 */
 	@Override
 	public double calculateDistance(Coordinate cor) {
 		assertClassInvariants();
@@ -181,6 +188,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
+	 * Transforms the Cartesian Coordinate in a Spheric coordinate representation
+	 * 
 	 * @methodtype conversion
 	 * @methodproperty composed
 	 */
@@ -198,7 +207,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the radius value for the spherical representation.
 	 */
 	private double calculateRadius() {
 		double radius = Math.sqrt(Math.pow(this.getXCoordinate(), 2) + Math.pow(this.getYCoordinate(), 2)
@@ -208,7 +217,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the theta value for the spherical representation.
 	 */
 	private double calculateTheta(double radius) {
 		AssertionUtils.assertNotNull(radius, this.getClass().getSimpleName());
@@ -218,7 +227,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the Phi value for the spherical representation.
 	 */
 	private double calculatePhi() {
 		double phi = Math.atan2(this.getYCoordinate(), this.getXCoordinate());

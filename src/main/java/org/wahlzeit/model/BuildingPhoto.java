@@ -42,10 +42,16 @@ public class BuildingPhoto extends Photo {
 	private Building building;
 	private final String className = this.getClass().getSimpleName();
 
+	/**
+	 * @methodtype constructor
+	 */
 	public BuildingPhoto() {
 		super();
 	}
 
+	/**
+	 * @methodtype constructor
+	 */
 	public BuildingPhoto(PhotoId photoId) {
 		super(photoId);
 	}

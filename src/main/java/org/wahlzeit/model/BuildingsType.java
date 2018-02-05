@@ -53,6 +53,7 @@ public class BuildingsType {
 	/**
 	 * Constructor
 	 * 
+	 * @methodtype constructor *
 	 * @param name
 	 */
 	public BuildingsType(String name, String architecture) {
@@ -66,7 +67,6 @@ public class BuildingsType {
 	 * @param year
 	 * @param name
 	 * @param location
-	 * @return
 	 */
 	public Building createInstance(int year, String name, Location location) {
 		return new Building(year, name, location, this);
@@ -75,7 +75,6 @@ public class BuildingsType {
 	/**
 	 * Returns the Buildingstypes name
 	 * 
-	 * @return
 	 */
 	public String getName() {
 		return typeName;

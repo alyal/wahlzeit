@@ -26,7 +26,6 @@ import org.wahlzeit.exceptions.WrongCoordinateTypeException;
 import org.wahlzeit.utils.AssertionUtils;
 import org.wahlzeit.utils.ParamsUtil;
 
-
 @DesignPattern(name = "Value Object", participants = { "SphericCoordinate" })
 public class SphericCoordinate extends AbstractCoordinate {
 
@@ -68,9 +67,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if (coordinateAlreadyExists) {
 			return sharedSphericCoordinatesMap.get(sharedKey);
 		}
-		SphericCoordinate newSphericCoordinate = new SphericCoordinate(radius, latitude, longitude);
-		sharedSphericCoordinatesMap.put(sharedKey, newSphericCoordinate);
-		return newSphericCoordinate;
+		synchronized (sharedSphericCoordinatesMap) {
+			SphericCoordinate newSphericCoordinate = new SphericCoordinate(radius, latitude, longitude);
+			sharedSphericCoordinatesMap.put(sharedKey, newSphericCoordinate);
+			return newSphericCoordinate;
+		}
 	}
 
 	// Getter
@@ -106,39 +107,45 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Creates a SphericCoordinate with a new radius value and stores it in the
+	 * sharedSphericCoordinatesMap if it does not already exist
 	 */
 	public SphericCoordinate createCoordinateWithRadius(double radius) {
 		assertClassInvariants();
 		assertDouble(radius);
 
-		SphericCoordinate coordinateWithRadius =  SphericCoordinate.createSphericCoordinate(radius, this.latitude, this.longitude);
+		SphericCoordinate coordinateWithRadius = SphericCoordinate.createSphericCoordinate(radius, this.latitude,
+				this.longitude);
 
 		assertClassInvariants();
 		return coordinateWithRadius;
 	}
 
 	/**
-	 * 
+	 * Creates a SphericCoordinate with a new latitude value and stores it in the
+	 * sharedSphericCoordinatesMap if it does not already exist
 	 */
 	public SphericCoordinate createCoordinateWithLatitude(double latitude) {
 		assertClassInvariants();
 		assertDouble(latitude);
 
-		SphericCoordinate coordinateWithLatitude = SphericCoordinate.createSphericCoordinate(this.radius, latitude, this.longitude);
+		SphericCoordinate coordinateWithLatitude = SphericCoordinate.createSphericCoordinate(this.radius, latitude,
+				this.longitude);
 
 		assertClassInvariants();
 		return coordinateWithLatitude;
 	}
 
 	/**
-	 * 
+	 * Creates a SphericCoordinate with a new longitude value and stores it in the
+	 * sharedSphericCoordinatesMap if it does not already exist
 	 */
 	public SphericCoordinate createCoordinateWithLongitude(double longitude) {
 		assertClassInvariants();
 		assertDouble(longitude);
 
-		SphericCoordinate coordinateWithLongitude = SphericCoordinate.createSphericCoordinate(this.radius, this.latitude, longitude);
+		SphericCoordinate coordinateWithLongitude = SphericCoordinate.createSphericCoordinate(this.radius,
+				this.latitude, longitude);
 
 		assertClassInvariants();
 		return coordinateWithLongitude;
@@ -177,29 +184,28 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * 
+	 * Calculates the x Coordinate value for the Cartesian representation
 	 */
 	private double calculateX(double radius, double sinTheta, double cosPhi) {
 		return radius * sinTheta * cosPhi;
 	};
 
 	/**
-	 * 
+	 * Calculates the y Coordinate value for the Cartesian representation
 	 */
 	private double calculateY(double radius, double sinTheta, double sinPhi) {
 		return radius * sinTheta * sinPhi;
 	};
 
 	/**
-	 * 
+	 * Calculates the z Coordinate value for the Cartesian representation
 	 */
 	private double calculateZ(double radius, double cosTheta) {
 		return radius * cosTheta;
 	};
 
 	/**
-	 * returns this Object, as we already have a spheric coordinate
-	 * representation
+	 * returns this Object, as we already have a spheric coordinate representation
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
@@ -294,6 +300,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return false;
 	}
 
+	/**
+	 * Creates a unique sting that is used as a sharedKey wihtin the
+	 * sharedSphericCoordinatesMap
+	 * 
+	 * @methodtype conversion
+	 * @methodproperty primitive
+	 */
 	private static final String toString(double radius, double latitude, double longitude) {
 		String asString = "radius: " + radius + ", " + "latidude: " + latitude + ", " + "longitude: " + longitude;
 		return asString;

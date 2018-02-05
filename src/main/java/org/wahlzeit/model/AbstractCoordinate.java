@@ -44,7 +44,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public abstract double calculateDistance(Coordinate cor);
 
 	/**
-	 * 
+	 * Returns the cartesian distance between the Coordinate object this method is
+	 * called on and the passed Coordinate object.
 	 */
 	@Override
 	public double getDistance(Coordinate cor) {
@@ -55,7 +56,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	};
 
 	/**
-	 * 
+	 * Returns the cartesian distance between the Coordinate object this method is
+	 * called on and the passed Coordinate object
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate cor) {
@@ -67,7 +69,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	}
 
 	/**
-	 * 
+	 * Returns the spherical distance between the Coordinate object this method is
+	 * called on and the passed Coordinate object
 	 */
 	@Override
 	public double getSphericDistance(Coordinate cor) {

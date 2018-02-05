@@ -27,6 +27,9 @@ package org.wahlzeit.model;
 public class Location {
 	public Coordinate coordinate;
 
+	/**
+	 * @methodtype constructor
+	 */
 	public Location(Coordinate corrdiante) {
 		this.coordinate = corrdiante;
 	}
@@ -48,8 +51,10 @@ public class Location {
 	}
 
 	/**
+	 * Returns the Latitude and Longitue of the Location in a string
 	 * 
-	 * @return
+	 * @methodtype conversion
+	 * @methodproperty primitive
 	 */
 	public String asString() {
 		return "Lat:" + this.coordinate.asSphericCoordinate().getLatitude() + "/Long:"
