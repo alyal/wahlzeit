@@ -1,34 +1,40 @@
-﻿=============== Collaboration =============== 
-public collaboration BuildingsPhotoBuldings {
+﻿=============== Collaboration ===============
+ 
+Describes the collaboration that one BuildingsPhoto always represents exact one Building or at least one.
+Roles: BuildingsPhoto: “Client”, Building: “Service”
 
-	public role BuildingsPhoto {
+public collaboration BuildingsClientService {
+
+	public role Client {
 		public Building getBuilding() {...},
 		public void setBuilding(Building building) {...},
 		...
 	}
 
-	public role Building {
-		public Location getLocation() {}
-		public void setLocation(Location location) {}
-		…
+	public role Service {
+		...
 	}
 
 ...
 }
 =============== Usage: ===============
 
-public class BuidlingsPhoto binds BuildingsPhotoBuldings.Building {
+public class BuidlingsPhoto binds BuildingsClientService.Client {
 	...
 }
 
-public class Building binds BuildingsPhotoBuldings.BuildingsPhoto {
+public class Building binds BuildingsClientService.Service {
 	...
 }
 
 =============== Collaboration =============== 
-public collaboration BuildingsTypeBuildings {
 
-	public role BuildingsType {
+Describes the collaboration between the Building and its type, where the Type object provides describing information of the building for a special type of a building.
+Roles: BuildingsType: “Type Object”, Building: “Base Object”
+
+public collaboration BuildingsTypeObject {
+
+	public role TypeObject {
 		public Building createInstance( ) {...},
 		public void setName(String name) {}
 		public String getName() {}
@@ -38,39 +44,44 @@ public collaboration BuildingsTypeBuildings {
 	
 }
 
-public role Building {
+	public role BaseObject {
 	…
 }
 
 =============== Usage: ===============
 
-public class BuidlingsType binds BuildingsTypeBuildings.Building {
+public class BuidlingsType binds BuildingsTypeObject.TypeObject {
 	...
 }
 
-public class Building binds BuildingsTypeBuildings.BuildingsType {
+public class Building binds BuildingsTypeObject.BaseObject {
 	...
 }
 
 =============== Collaboration =============== 
-public collaboration BuildingsManagerBuildings {
-	public role BuildingsManager {
+
+The collaboration between BuildingsManager and Buildings. The BuildingsManager is responsible for managing the Buildings, meaning the Manager object is responsible for creating, getting, searching or handling Buildings Objects.
+Roles: BuildingsManager: “Manager”, Building: “managedObject”
+
+public collaboration BuildingsManagerCollaboration {
+
+	public role Manager {
 		public static Building getBuilding (...) {},
 		public synchronized Building createBuilding(...) {},
 		...			
 	}
 
-public role Building {
+	public role managedObject {
 	…
 }
 
 =============== Usage: ===============
 
-public class BuidlingsManager binds BuildingsManagerBuildings.Building {
+public class BuidlingsManager binds BuildingsManagerCollaboration.Manager {
 	...
 }
 
-public class Building binds BuildingsManagerBuildings.BuildingsManager {
+public class Building binds BuildingsManagerCollaboration.managedObject {
 	...
 }
 
